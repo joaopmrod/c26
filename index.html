@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="pt" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sailing Week 2026 - Julija Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        #map { height: 100%; width: 100%; z-index: 1; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out, opacity 0.3s ease; opacity: 0; }
+        .accordion-item.active .accordion-content { max-height: 1200px; opacity: 1; }
+        .accordion-item.active .chevron { transform: rotate(180deg); }
+        /* Melhorias de quebra de linha e responsividade */
+        .break-words { 
+            word-wrap: break-word; 
+            word-break: break-word; 
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+        .hyphens-auto {
+            hyphens: auto;
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            -ms-hyphens: auto;
+        }
+        /* Garantir que containers não quebrem layout */
+        .min-w-0 { min-width: 0; }
+    </style>
+</head>
+<body class="text-slate-800 bg-slate-50">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 bg-transparent">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div id="nav-logo" class="text-2xl font-bold tracking-tighter text-white">
+                ADRIATIC<span class="text-teal-400">2026</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#plano-terra" class="nav-link text-slate-200 hover:text-teal-400 transition font-medium">Plano Terra</a>
+                <a href="#barco" class="nav-link text-slate-200 hover:text-teal-400 transition font-medium">O Barco</a>
+                <a href="#roteiro" class="nav-link text-slate-200 hover:text-teal-400 transition font-medium">Sailing</a>
+                <a href="#custos" class="nav-link text-slate-200 hover:text-teal-400 transition font-medium">Orçamento</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://www.sailing-holidays-in-croatia.com/website/var/tmp/image-thumbnails/0/5693/thumb__contentbig/Zadar.jpeg" alt="Sailing Croatia" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-900/60 to-slate-900/40"></div>
+        </div>
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto mt-16">
+            <div class="inline-block px-4 py-1 mb-6 border border-teal-400/50 rounded-full bg-slate-900/50 backdrop-blur-sm">
+                <span class="text-teal-400 text-sm font-semibold tracking-widest uppercase">16 a 27 de Julho de 2026</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                Sailing Croatia <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">Julija Experience</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl mx-auto font-light">
+                Split • Hvar • Dubrovnik • Bali Catsmart "Julija"
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#roteiro" class="px-8 py-4 bg-teal-500 hover:bg-teal-600 text-white rounded-lg font-semibold transition shadow-lg shadow-teal-500/30 flex items-center justify-center gap-2">
+                    <i data-lucide="ship" class="w-5 h-5"></i> Ver Itinerário
+                </a>
+                <a href="#barco" class="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-lg font-semibold transition flex items-center justify-center gap-2">
+                    <i data-lucide="star" class="w-5 h-5"></i> Conhecer o Barco
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Intro Stats -->
+    <section class="py-12 bg-white -mt-10 relative z-20 container mx-auto px-4 rounded-xl shadow-xl max-w-5xl border border-slate-100">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 mb-3">
+                    <i data-lucide="plane" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold">12 Dias</h3>
+                <p class="text-sm text-slate-500">Viagem Total</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-teal-50 rounded-full flex items-center justify-center text-teal-600 mb-3">
+                    <i data-lucide="ship" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold">Bali Catsmart</h3>
+                <p class="text-sm text-slate-500">Catamarã Premium</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center text-purple-600 mb-3">
+                    <i data-lucide="moon" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold">11 Noites</h3>
+                <p class="text-sm text-slate-500">Dormidas</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center text-orange-600 mb-3">
+                    <i data-lucide="wallet" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold">~1440€</h3>
+                <p class="text-sm text-slate-500">Por Pessoa</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plano Terra Antes -->
+    <section id="plano-terra" class="py-20 bg-slate-50">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="text-center mb-10">
+                <span class="text-teal-600 font-bold uppercase tracking-wider text-sm">Parte 1</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">A Chegada por Terra</h2>
+                <div class="w-20 h-1 bg-teal-500 mx-auto rounded-full"></div>
+                <p class="text-slate-600 mt-4 text-sm italic">Escolhe entre <strong>Opção A</strong> (Hvar primeiro) e <strong>Opção B</strong> (Split &amp; Dubrovnik antes do barco).</p>
+            </div>
+            <div class="flex justify-center gap-3 mb-8">
+                <button id="pre-opcao-a-btn" class="px-4 py-2 text-xs font-semibold rounded-full border bg-teal-500 border-teal-500 text-white">Opção A: Hvar primeiro</button>
+                <button id="pre-opcao-b-btn" class="px-4 py-2 text-xs font-semibold rounded-full border border-slate-300 bg-white text-slate-600">Opção B: Split &amp; Dubrovnik</button>
+            </div>
+            <!-- Opção A: plano original com Hvar primeiro -->
+            <div id="pre-opcao-a" class="grid md:grid-cols-2 gap-8">
+                <!-- Dia 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/712f6e939bd2120e74c6b598111f353595a58416.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">16 Jul (Qui)</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Chegada &amp; Hvar</h3>
+                        <p class="text-slate-600 text-sm mb-4">Aterragem em Split (SPU) às 11:00. Transfer para o porto e Ferry direto para a ilha de Hvar. Noite na cidade mais vibrante.</p>
+                        <div class="pt-4 border-t border-slate-100 text-xs font-semibold text-slate-500 uppercase flex items-center gap-2">
+                            <i data-lucide="moon" class="w-4 h-4 text-purple-500"></i> Dormida: Hvar
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 text-xs font-semibold text-slate-500 uppercase flex items-center gap-2 flex-wrap">
+                            <span class="flex items-center gap-1">
+                                <i data-lucide="car" class="w-4 h-4 text-slate-500"></i> Transfer
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <i data-lucide="ship" class="w-4 h-4 text-teal-500"></i> Ferry
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Dia 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/a23a089d445186f89df198f99d892f7b8c625f5b.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">17 Jul (Sex)</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Rumo a Dubrovnik</h3>
+                        <p class="text-slate-600 text-sm mb-4">Ferry matinal para Dubrovnik. Tarde dedicada a explorar as Muralhas, Stradun e o Buža Bar ao pôr-do-sol.</p>
+                        <div class="pt-4 border-t border-slate-100 text-xs font-semibold text-slate-500 uppercase flex items-center gap-2">
+                            <i data-lucide="moon" class="w-4 h-4 text-purple-500"></i> Dormida: Dubrovnik
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 text-xs font-semibold text-slate-500 uppercase flex items-center gap-2">
+                            <i data-lucide="ship" class="w-4 h-4 text-teal-500"></i> Ferry
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Opção B: alternativa Split & Dubrovnik -->
+            <div id="pre-opcao-b" class="grid md:grid-cols-3 gap-8 hidden">
+                <!-- Dia 16 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://pplx-res.cloudinary.com/image/upload/v1770921214/pplx_search_images/827ee3fccf51de9b4189d01e3397c4a1d8267cf8.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">16 Jul (Qui)</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Visitar Split</h3>
+                        <p class="text-slate-600 text-sm mb-4">Aterragem em Split (SPU). Visita ao Palácio de Diocleciano e exploração da cidade histórica. Autocarro ao fim da tarde para Dubrovnik.</p>
+                        <div class="pt-4 border-t border-slate-100 text-xs font-semibold text-slate-500 uppercase flex items-center gap-2">
+                            <i data-lucide="moon" class="w-4 h-4 text-purple-500"></i> Dormida: Dubrovnik
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 text-xs font-semibold text-slate-500 uppercase flex items-center gap-2">
+                            <i data-lucide="bus" class="w-4 h-4 text-blue-500"></i> Autocarro
+                        </div>
+                    </div>
+                </div>
+                <!-- Dia 17 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/a23a089d445186f89df198f99d892f7b8c625f5b.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">17 Jul (Sex)</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Explorar Dubrovnik</h3>
+                        <p class="text-slate-600 text-sm mb-4">Dia completo em Dubrovnik. Explorar as Muralhas, Stradun, Forte Lovrijenac e o Buža Bar ao pôr-do-sol.</p>
+                        <div class="pt-4 border-t border-slate-100 text-xs font-semibold text-slate-500 uppercase flex items-center gap-2">
+                            <i data-lucide="moon" class="w-4 h-4 text-purple-500"></i> Dormida: Dubrovnik
+                        </div>
+                    </div>
+                </div>
+                <!-- Dia 18 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/a23a089d445186f89df198f99d892f7b8c625f5b.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">18 Jul (Sáb)</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Dubrovnik &amp; Compras</h3>
+                        <p class="text-slate-600 text-sm mb-4">Manhã em Dubrovnik para últimas visitas e compras. Preparação para embarque no barco à tarde.</p>
+                        <div class="pt-4 border-t border-slate-100 text-xs font-semibold text-slate-500 uppercase flex items-center gap-2">
+                            <i data-lucide="ship" class="w-4 h-4 text-teal-500"></i> Embarque no Barco
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- O Barco -->
+    <section id="barco" class="py-24 bg-white overflow-hidden border-t border-slate-100">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <img src="https://pplx-res.cloudinary.com/image/upload/v1770921214/pplx_search_images/d3f08e3eeb44a37074d9398d6206aa79bfcbdfd2.jpg" alt="Bali Catsmart Julija" class="rounded-3xl shadow-2xl relative z-10">
+                    <div class="absolute -top-6 -left-6 w-32 h-32 bg-teal-100 rounded-full opacity-50 blur-2xl"></div>
+                </div>
+                <div>
+                    <span class="text-teal-600 font-bold uppercase tracking-widest text-sm">O Nosso Catamarã</span>
+                    <h2 class="text-4xl font-bold text-slate-900 mt-2 mb-6">Bali Catsmart "Julija"</h2>
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed italic">"A Nossa Casa no Mar" — Desenhada para o máximo conforto e socialização.</p>
+                    <ul class="space-y-4 mb-10">
+                        <li class="flex items-center gap-3"><i data-lucide="star" class="w-5 h-5 text-teal-500"></i> Conceito Open Space</li>
+                        <li class="flex items-center gap-3"><i data-lucide="star" class="w-5 h-5 text-teal-500"></i> Deck na proa para relaxar</li>
+                        <li class="flex items-center gap-3"><i data-lucide="star" class="w-5 h-5 text-teal-500"></i> Frigorífico de 265L</li>
+                        <li class="flex items-center gap-3"><i data-lucide="star" class="w-5 h-5 text-teal-500"></i> Design moderno e excelente performance</li>
+                    </ul>
+                    <a href="https://www.boataround.com/boat/bali-catsmart-julija?checkIn=2026-07-18&checkOut=2026-07-25#g-6672ce4b420940c3e301aa91" target="_blank" class="inline-flex items-center gap-3 px-6 py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition shadow-lg group">
+                        Ver no Boataround <i data-lucide="external-link" class="w-5 h-5 text-teal-400 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Itinerário Sailing -->
+    <section id="roteiro" class="py-20 bg-slate-50 border-t border-slate-100">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="text-center mb-12">
+                <span class="text-blue-600 font-bold uppercase tracking-wider text-sm">Parte 2</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Itinerário de Navegação (7 Dias)</h2>
+                <div class="w-20 h-1 bg-blue-500 mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Mapa Interativo -->
+            <div class="mb-16">
+                <div class="bg-white p-2 rounded-3xl shadow-xl overflow-hidden border border-slate-200 aspect-[16/10] md:aspect-[21/9] w-full min-h-[400px]">
+                    <div id="map"></div>
+                </div>
+                <div class="mt-4 flex flex-wrap justify-center gap-4 text-xs font-semibold uppercase tracking-wider">
+                    <span class="flex items-center gap-2 text-blue-600"><span class="w-3 h-3 rounded-full bg-blue-600 border border-white shadow-sm"></span> Pontos em Terra</span>
+                    <span class="flex items-center gap-2 text-teal-600"><span class="w-3 h-3 rounded-full bg-teal-600 border border-white shadow-sm"></span> Pontos Sailing</span>
+                </div>
+            </div>
+
+            <!-- Dicas práticas (provisões e barco) -->
+            <div class="mb-12 p-6 bg-slate-100/80 rounded-2xl border border-slate-200">
+                <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">Antes de zarpar</h3>
+                <div class="grid md:grid-cols-2 gap-6 text-sm text-slate-600">
+                    <div>
+                        <p class="font-semibold text-slate-800 mb-1">Provisões</p>
+                        <p>Aprovisionamento no Sábado em <strong>Kaufland ou Lidl (Župa Dubrovačka)</strong>, 5 km da marina — melhores preços que o Konzum da marina. Muita água (3 L/pessoa/dia), sacos de gelo, carvão se o barco tiver churrasco. Nas ilhas só há minimercados pequenos e caros.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-slate-800 mb-1">Barco</p>
+                        <p>Velocidade de cruzeiro ~6 nós (económico). Sem marinas no roteiro: ser disciplinado com água doce e carregar baterias (motor 2 h/dia ou painéis solares).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dias do Itinerário -->
+            <div id="itinerary-accordion" class="space-y-6">
+                <!-- Renderizado via JavaScript para manter o ficheiro limpo -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Regresso -->
+    <section class="py-24 bg-white border-t border-slate-100">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="text-center mb-10">
+                <span class="text-orange-600 font-bold uppercase tracking-wider text-sm">Parte 3</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Regresso</h2>
+                <div class="w-20 h-1 bg-orange-500 mx-auto rounded-full"></div>
+                <p class="text-slate-600 mt-4 text-sm italic">Escolhe entre <strong>Opção A</strong> (regresso via Split) e <strong>Opção B</strong> (regresso com Hvar).</p>
+            </div>
+            <div class="flex justify-center gap-3 mb-8">
+                <button id="post-opcao-a-btn" class="px-4 py-2 text-xs font-semibold rounded-full border bg-orange-500 border-orange-500 text-white">Opção A: Split</button>
+                <button id="post-opcao-b-btn" class="px-4 py-2 text-xs font-semibold rounded-full border border-slate-300 bg-white text-slate-600">Opção B: Hvar</button>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8" id="post-sailing-a">
+                <!-- Preenchido via JS (Opção A) -->
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 hidden" id="post-sailing-b">
+                <!-- Preenchido via JS (Opção B) -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Orçamento -->
+    <section id="custos" class="py-20 bg-slate-900 text-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Orçamento Estimado</h2>
+                <p class="text-slate-400">Cálculo para grupo de 6 pessoas (Julho 2026)</p>
+            </div>
+            <div class="bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700">
+                <div class="p-8">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-slate-700 text-slate-500 text-xs uppercase tracking-widest">
+                                <th class="py-4">Item</th>
+                                <th class="py-4 text-right">Total (6 Pax)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="budget-body" class="divide-y divide-slate-700/50">
+                            <!-- JS Inject -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-slate-900/40">
+                                <td class="py-8 pl-4 text-xl font-bold uppercase">Total Estimado</td>
+                                <td id="budget-total" class="py-8 pr-4 text-right text-3xl font-bold text-teal-400">0 €</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="bg-gradient-to-r from-teal-600 to-blue-600 p-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-6">
+                    <div>
+                        <p class="text-teal-100 text-sm uppercase font-black tracking-widest">Valor Final por Pessoa</p>
+                        <p class="text-xs text-white/70">Alojamento, Barco, Alimentação e Transportes Internos</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md px-8 py-4 rounded-2xl border border-white/20">
+                        <span id="budget-per-pax" class="text-4xl font-black text-white">~ 0 €</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 bg-slate-50 border-t border-slate-200 text-center">
+        <p class="text-slate-400 text-sm font-medium tracking-widest uppercase">Adriatic Sailing Adventure • 2026</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Init Lucide Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Logic
+        const navbar = document.getElementById('navbar');
+        const navLogo = document.getElementById('nav-logo');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-md', 'py-3');
+                navbar.classList.remove('bg-transparent', 'py-6');
+                navLogo.classList.add('text-slate-900');
+                navLogo.classList.remove('text-white');
+                navLinks.forEach(l => {
+                    l.classList.add('text-slate-600');
+                    l.classList.remove('text-slate-200');
+                });
+            } else {
+                navbar.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-md', 'py-3');
+                navbar.classList.add('bg-transparent', 'py-6');
+                navLogo.classList.remove('text-slate-900');
+                navLogo.classList.add('text-white');
+                navLinks.forEach(l => {
+                    l.classList.remove('text-slate-600');
+                    l.classList.add('text-slate-200');
+                });
+            }
+        });
+
+        // Data Management
+        const itinerary = [
+            { day: 1, date: "Sábado, 18 Jul", title: "A Fuga para o Silêncio", route: "Dubrovnik → Koločep", time: "1h 15m", dist: "5.5 NM", highlight: "Churrasco sob as estrelas", details: "Embarque no Bali 'Julija'. Check-in e arrumação das provisões antes da largada. Fugimos da confusão para acordar já no paraíso.", sleep: "Ancoradouro Livre (Donje Čelo)", img: "https://pplx-res.cloudinary.com/image/upload/v1770921173/pplx_search_images/5ebbda768e2aadf1b1818966087608d8f1e195fd.jpg",
+                moorings: [
+                    { name: "Donje Čelo, Koločep", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/carte?q=Donje%20Čelo%20Koločep", lat: 42.6780, lng: 18.0048 }
+                ],
+                plan: [
+                    { time: "17:00", text: "Check-in e arrumação rápida das provisões." },
+                    { time: "18:30", text: "Largada da ACI Marina Dubrovnik." },
+                    { time: "—", text: "Navegação (1h 15m): Rumo à Ilha de Koločep (Baía Donje Čelo)." },
+                    { time: "19:45", text: "Ancorar em Donje Čelo. <strong>Ancoradouro Livre.</strong> Fundo de areia, boa tença." },
+                    { time: "20:30", text: "Jantar a Bordo: Churrasco de boas-vindas sob as estrelas." }
+                ] },
+            { day: 2, date: "Domingo, 19 Jul", title: "O Caribe do Adriático", route: "Koločep → Lopud → Šipan", time: "2h 45m", dist: "11 NM", highlight: "Praia de Areia Šunj", details: "Manhã na rara praia de areia de Šunj. Tarde a navegar para a ilha histórica de Šipan.", sleep: "Ancoradouro Livre (Šipanska Luka)", img: "https://pplx-res.cloudinary.com/image/upload/v1770921173/pplx_search_images/02c97d30c9bbbf4058ea3af3daf626d6371670b6.jpg",
+                moorings: [
+                    { name: "Šunj, Lopud", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/carte?q=Šunj%20Lopud", lat: 42.6900, lng: 17.9550 },
+                    { name: "Šipanska Luka, Šipan", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/carte?q=Šipanska%20Luka%20Šipan", lat: 42.7424, lng: 17.7869 }
+                ],
+                plan: [
+                    { time: "09:00", text: "Pequeno-almoço." },
+                    { time: "10:00", text: "Navegação (45 min) para Ilha de Lopud." },
+                    { time: "10:45", text: "Paragem na Praia Šunj. Uma das raras praias de areia. Ancore fora da zona de banhistas (grátis)." },
+                    { time: "13:00", text: "Almoço a Bordo em Šunj." },
+                    { time: "14:30", text: "Navegação (2h 00m) para Ilha de Šipan (Baía de Šipanska Luka)." },
+                    { time: "16:30", text: "Chegada a Šipanska Luka. <strong>Dica:</strong> Não vá ao cais nem às boias pagas. Fundo da baía (oeste) ou entrada norte — o fundo segura bem. Grátis se ancorar." },
+                    { time: "19:00", text: "Passeio de dinghy a terra para ver a vila." },
+                    { time: "20:30", text: "Jantar a Bordo." }
+                ] },
+            { day: 3, date: "Segunda, 20 Jul", title: "Entrada no Parque Nacional (Mljet)", route: "Šipan → Polače (Mljet)", time: "2h 30m", dist: "14 NM", highlight: "Lagos Salgados & Santa Maria", details: "Entramos no parque nacional. A natureza aqui é bruta e verdejante. Visitamos os lagos salgados e o ilhéu de Santa Maria.", sleep: "Baía de Polače", img: "https://pplx-res.cloudinary.com/image/upload/v1770921179/pplx_search_images/6219fcbe6b46bb2b3b482055cb91ad8a2a5c54f4.jpg",
+                moorings: [
+                    { name: "Polače, Mljet", type: "Ancoradouro Livre (Parque Nacional)", navilyUrl: "https://www.navily.com/carte?q=Polače%20Mljet", lat: 42.7859, lng: 17.3785 }
+                ],
+                plan: [
+                    { time: "09:00", text: "Navegação (2h 30m) rumo a Polače (Mljet)." },
+                    { time: "11:30", text: "Chegada a Polače. <strong>Custo:</strong> Ancorar é grátis, mas há bilhete do Parque Nacional (os rangers vão ao barco). ~60€–100€ barco + bilhetes por pessoa. Inclui lagos e autocarro. Evite as boias dos restaurantes; ancore no meio da baía." },
+                    { time: "12:30", text: "Almoço a Bordo." },
+                    { time: "14:00", text: "Visita aos Lagos Salgados e Ilhéu de Santa Maria (incluído no bilhete)." },
+                    { time: "20:00", text: "Jantar a Bordo num dos sítios mais calmos do mundo." }
+                ] },
+            { day: 4, date: "Terça, 21 Jul", title: "Rumo a Lastovo (Nature Park)", route: "Mljet → Lastovnjaci → Jurjeva Luka", time: "4h 30m", dist: "23 NM", highlight: "Ilhéus desertos & céu estrelado", details: "O dia mais longo de navegação rumo à ilha mais remota. Paragem nos ilhéus desertos Lastovnjaci; noite em Jurjeva Luka.", sleep: "Jurjeva Luka (Parque Natural)", img: "https://pplx-res.cloudinary.com/image/upload/v1770921180/pplx_search_images/f44d964f5ca9efd57297723b1b3dd6d92dbd237c.jpg",
+                moorings: [
+                    { name: "Lastovnjaci", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/carte?q=Lastovnjaci", lat: 42.7167, lng: 16.9500 },
+                    { name: "Jurjeva Luka, Lastovo", type: "Ancoradouro Livre (Parque Natural)", navilyUrl: "https://www.navily.com/carte?q=Jurjeva%20Luka%20Lastovo", lat: 42.7167, lng: 16.8833 }
+                ],
+                plan: [
+                    { time: "08:30", text: "Navegação (3h 30m) para Lastovo." },
+                    { time: "12:00", text: "Chegada aos Ilhéus Lastovnjaci (a leste de Lastovo). Ancorar no meio dos ilhéus desertos para banhos — água turquesa surreal." },
+                    { time: "13:00", text: "Almoço a Bordo." },
+                    { time: "15:00", text: "Navegação (1h 00m) para Jurjeva Luka (baía grande e fechada, perto de Pasadur). <strong>Porquê aqui?</strong> Zaklopatica tem restaurantes; Skrivena Luka está cheia de boias pagas. Jurjeva Luka é mais selvagem. Grátis + taxa Parque Natural ~30–40€/barco. Alternativa: Skrivena Luka na zona livre se houver espaço." },
+                    { time: "20:00", text: "Jantar a Bordo. Ver o céu estrelado — Lastovo é o local mais escuro da Croácia." }
+                ] },
+            { day: 5, date: "Quarta, 22 Jul", title: "A Ponta de Korčula", route: "Lastovo → Badija → Korčula", time: "3h 45m + 20m", dist: "18 NM", highlight: "Veados em Badija & cidade medieval", details: "Almoço com veados selvagens que vêm à mão em Badija. Visita à cidade medieval de Korčula; noite em baía livre (evitar ACI Korčula).", sleep: "Baía de Luka ou Uvala Kneža", img: "https://pplx-res.cloudinary.com/image/upload/v1770921179/pplx_search_images/08558b2377e0f2f0ac33c617655df5bb8860186e.jpg",
+                moorings: [
+                    { name: "Badija, Korčula", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/carte?q=Badija%20Korčula", lat: 42.9542, lng: 17.1647 },
+                    { name: "Uvala Luka, Korčula", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/carte?q=Uvala%20Luka%20Korčula", lat: 42.9600, lng: 17.1500 },
+                    { name: "Uvala Kneža, Korčula", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/carte?q=Uvala%20Kneža%20Korčula", lat: 42.9700, lng: 17.1400 }
+                ],
+                plan: [
+                    { time: "09:00", text: "Navegação (3h 45m) para a Ilha de Korčula." },
+                    { time: "12:45", text: "Chegada à Ilha de Badija." },
+                    { time: "13:00", text: "Almoço a Bordo ancorado ao largo de Badija (perto do mosteiro). Ir a terra ver os veados que vêm comer à mão." },
+                    { time: "15:30", text: "Navegação (20 min) para Baía de Luka (a leste da cidade) ou Uvala Kneža. ACI Korčula é caríssima (~120€+). Ancorar na baía e ir de táxi-boat ou dinghy à cidade." },
+                    { time: "17:00", text: "Visita à cidade de Korčula." },
+                    { time: "20:30", text: "Jantar a Bordo na baía escolhida." }
+                ] },
+            { day: 6, date: "Quinta, 23 Jul", title: "O Segredo de Pelješac", route: "Korčula → Žuljana → Marčuleti", time: "3h + 2h", dist: "24 NM", highlight: "Žuljana & baía selvagem", details: "Navegação pelo canal de Pelješac. Paragem em Žuljana; noite em Marčuleti (selvagem, grátis).", sleep: "Marčuleti (selvagem)", img: "https://pplx-res.cloudinary.com/image/upload/v1770921190/pplx_search_images/873f7f73e83d4fd466d6bdffc63d05a73f1f21a3.jpg",
+                moorings: [
+                    { name: "Žuljana, Pelješac", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/mouillage/zuljana/29359", lat: 42.8899, lng: 17.4536 },
+                    { name: "Marčuleti, Pelješac", type: "Ancoradouro Livre (Selvagem)", navilyUrl: "https://www.navily.com/carte?q=Marčuleti%20Pelješac", lat: 42.7753, lng: 17.7533 }
+                ],
+                plan: [
+                    { time: "09:30", text: "Navegação (3h 00m) pelo Canal de Pelješac rumo a Žuljana." },
+                    { time: "12:30", text: "Chegada a Žuljana. Baía lindíssima, virada a oeste." },
+                    { time: "13:00", text: "Almoço a Bordo." },
+                    { time: "15:00", text: "Navegação (2h 00m) até Marčuleti ou Kobaš. <strong>Dica:</strong> Kobaš tem cais de restaurantes. Para grátis e livre, ancore em Marčuleti (selvagem, sem casas) ou ao largo de Kobaš se a profundidade permitir (cai rápido para 20 m)." },
+                    { time: "20:00", text: "Jantar a Bordo." }
+                ] },
+            { day: 7, date: "Sexta, 24 Jul", title: "O Regresso Estratégico", route: "Pelješac → Jakljan → Dubrovnik", time: "1h + 2h 30m", dist: "20 NM", highlight: "Jakljan & abastecimento Gruž", details: "Paragem na baía de Jakljan para últimos mergulhos. Navegação final até Dubrovnik; abastecimento em Gruž antes de entrar na marina.", sleep: "ACI Marina Dubrovnik", img: "https://pplx-res.cloudinary.com/image/upload/v1770921190/pplx_search_images/407a08c6af74f11c55773f413ca552a23bda045c.jpg",
+                moorings: [
+                    { name: "Jakljan", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/mouillage/otok-jakljan/42694", lat: 42.7000, lng: 18.0500 },
+                    { name: "ACI Marina Dubrovnik", type: "Marina", navilyUrl: "https://www.navily.com/carte?q=ACI%20Marina%20Dubrovnik", lat: 42.6750, lng: 18.0780 }
+                ],
+                plan: [
+                    { time: "09:00", text: "Navegação (1h 00m) até à ilha de Jakljan." },
+                    { time: "10:00", text: "Paragem na baía desabitada de Jakljan (ou Olipa). Últimos mergulhos em \"piscina natural\"." },
+                    { time: "12:30", text: "Almoço a Bordo." },
+                    { time: "14:00", text: "Navegação final (2h 30m) para Dubrovnik." },
+                    { time: "16:30", text: "Abastecimento de combustível no porto de Gruž. (Obrigatório antes de devolver.)" },
+                    { time: "17:30", text: "Entrada na ACI Marina Dubrovnik." },
+                    { time: "20:00", text: "Jantar a bordo na marina (limpar o frigorífico) ou ir à cidade." }
+                ] }
+        ];
+
+        const budget = [
+            { item: "Charter Barco (Bali Catsmart)", total: 4600, note: "Valor base do aluguer" },
+            { item: "Extras Barco (Fuel + Seguro + Taxas)", total: 750, note: "Combustível, Taxa Turística e Seguro" },
+            { item: "Alojamento Terra (4 Noites)", total: 1200, note: "Estimativa Airbnb Julho" },
+            { item: "Supermercado (Comida/Bebida)", total: 1000, note: "Compras para a bordo" },
+            { item: "Transportes (Ferries + Bus + Uber)", total: 800, note: "Logística interna" },
+            { item: "Parques Nacionais", total: 300, note: "Mljet e Lastovo" }
+        ];
+
+        // Accordion Render
+        const accordionContainer = document.getElementById('itinerary-accordion');
+        itinerary.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'accordion-item bg-white rounded-2xl overflow-hidden border border-slate-200 transition-all duration-300';
+            div.innerHTML = `
+                <div class="p-6 md:p-8 cursor-pointer flex flex-col md:flex-row justify-between md:items-center gap-4 hover:bg-slate-50/50 transition">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold bg-slate-100 text-slate-400 border border-slate-200 num-badge">
+                            ${item.day}
+                        </div>
+                        <div>
+                            <span class="text-sm font-semibold text-blue-600 uppercase tracking-wide">${item.date}</span>
+                            <h3 class="text-xl font-bold text-slate-900 mt-1">${item.title}</h3>
+                            <div class="flex items-center gap-2 text-slate-500 text-sm mt-2">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-teal-500"></i> ${item.route}
+                            </div>
+                        </div>
+                    </div>
+                    <i data-lucide="chevron-down" class="chevron w-7 h-7 text-slate-300 transition-transform"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-0 border-t border-slate-100">
+                        <div class="p-6 md:p-8">
+                            <p class="text-slate-600 leading-relaxed mb-6 break-words hyphens-auto">${item.details}</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-blue-50/50 p-4 rounded-2xl mb-6">
+                                <div class="flex items-start gap-2 min-w-0">
+                                    <i data-lucide="clock" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                    <div class="min-w-0 flex-1"><span class="text-[10px] font-bold text-slate-400 uppercase block">Tempo</span><span class="text-sm font-semibold break-words">${item.time}</span></div>
+                                </div>
+                                <div class="flex items-start gap-2 min-w-0">
+                                    <i data-lucide="ship" class="w-4 h-4 text-teal-500 mt-1 flex-shrink-0"></i>
+                                    <div class="min-w-0 flex-1"><span class="text-[10px] font-bold text-slate-400 uppercase block">Distância</span><span class="text-sm font-semibold break-words">${item.dist}</span></div>
+                                </div>
+                                <div class="flex items-start gap-2 min-w-0">
+                                    <i data-lucide="moon" class="w-4 h-4 text-purple-500 mt-1 flex-shrink-0"></i>
+                                    <div class="min-w-0 flex-1"><span class="text-[10px] font-bold text-slate-400 uppercase block">Noite</span><span class="text-sm font-semibold break-words hyphens-auto">${item.sleep}</span></div>
+                                </div>
+                                <div class="flex items-start gap-2 min-w-0">
+                                    <i data-lucide="utensils" class="w-4 h-4 text-orange-500 mt-1 flex-shrink-0"></i>
+                                    <div class="min-w-0 flex-1"><span class="text-[10px] font-bold text-slate-400 uppercase block">Highlight</span><span class="text-sm font-semibold break-words hyphens-auto">${item.highlight}</span></div>
+                                </div>
+                            </div>
+                            ${item.moorings && item.moorings.length > 0 ? `<div class="border-t border-slate-100 pt-6 mb-6">
+                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2"><i data-lucide="anchor" class="w-4 h-4 text-blue-500"></i> Pontos de Ancoragem</h4>
+                                <div class="space-y-2">
+                                    ${item.moorings.map(m => `
+                                        <div class="flex items-start gap-2 p-2 rounded-lg hover:bg-slate-50 transition">
+                                            <i data-lucide="map-pin" class="w-4 h-4 text-teal-500 mt-0.5 flex-shrink-0"></i>
+                                            <div class="flex-1 min-w-0">
+                                                <a href="${m.navilyUrl}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-slate-800 hover:text-teal-600 transition break-words inline-flex items-center gap-1">
+                                                    ${m.name}
+                                                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                                                </a>
+                                                <p class="text-xs text-slate-500 mt-0.5">${m.type}</p>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>` : ''}
+                            ${item.plan ? `<div class="border-t border-slate-100 pt-6">
+                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2"><i data-lucide="list-checks" class="w-4 h-4 text-teal-500"></i> Plano do dia</h4>
+                                <ul class="space-y-2 text-sm text-slate-600">
+                                    ${item.plan.map(s => `<li class="flex gap-3"><span class="font-mono font-semibold text-teal-600 shrink-0 w-10">${s.time}</span><span class="leading-snug break-words flex-1">${s.text}</span></li>`).join('')}
+                                </ul>
+                            </div>` : ''}
+                        </div>
+                        <div class="h-64 md:h-auto md:min-h-[400px] relative">
+                            <img src="${item.img}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            `;
+            div.querySelector('.p-6').addEventListener('click', () => {
+                const isActive = div.classList.contains('active');
+                document.querySelectorAll('.accordion-item').forEach(el => {
+                    el.classList.remove('active');
+                    el.querySelector('.num-badge').classList.remove('bg-blue-600', 'text-white');
+                    el.querySelector('.num-badge').classList.add('bg-slate-100', 'text-slate-400');
+                });
+                if (!isActive) {
+                    div.classList.add('active');
+                    div.querySelector('.num-badge').classList.remove('bg-slate-100', 'text-slate-400');
+                    div.querySelector('.num-badge').classList.add('bg-blue-600', 'text-white');
+                    // Initialize icons when accordion opens
+                    setTimeout(() => lucide.createIcons(), 100);
+                }
+            });
+            accordionContainer.appendChild(div);
+            // Initialize icons after appending
+            lucide.createIcons();
+        });
+
+        // Post-Sailing Render (Opção A e B)
+        const postSailingDataA = [
+            { date: "25 Jul (Sáb)", title: "Desembarque & Bus", desc: "Saída às 08:30. Último passeio em Dubrovnik. Autocarro noturno para Split.", img: "https://pplx-res.cloudinary.com/image/upload/v1770921214/pplx_search_images/d9b5d42f071224202b923486bddb08aff7aa23d4.jpg", transport: [{ icon: 'bus', color: 'blue-500', label: 'Autocarro' }] },
+            { date: "26 Jul (Dom)", title: "Split & Trogir", desc: "Visita ao Palácio de Diocleciano e à cidade medieval de Trogir.", img: "https://pplx-res.cloudinary.com/image/upload/v1770921214/pplx_search_images/827ee3fccf51de9b4189d01e3397c4a1d8267cf8.jpg" },
+            { date: "27 Jul (Seg)", title: "Regresso", desc: "Voo de regresso de Split (SPU) às 10:00.", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80", transport: [{ icon: 'plane', color: 'blue-500', label: 'Voo' }] }
+        ];
+
+        const postSailingDataB = [
+            { date: "25 Jul (Sáb)", title: "Ferry para Hvar", desc: "Desembarque do barco de manhã. Ferry para Hvar. Visitar a ilha e explorar a cidade histórica. Noite em Hvar.", img: "https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/712f6e939bd2120e74c6b598111f353595a58416.jpg", transport: [{ icon: 'ship', color: 'teal-500', label: 'Ferry' }] },
+            { date: "26 Jul (Dom)", title: "Explorar Hvar", desc: "Dia completo em Hvar. Visitar o Forte Spanjola, explorar as praias e a vida noturna da ilha. Dormir em Hvar.", img: "https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/712f6e939bd2120e74c6b598111f353595a58416.jpg" },
+            { date: "27 Jul (Seg)", title: "Hvar & Regresso", desc: "Manhã em Hvar. Ferry para Split ao meio-dia. Transfer para o aeroporto. Voo de regresso de Split (SPU).", img: "https://pplx-res.cloudinary.com/image/upload/v1770921214/pplx_search_images/827ee3fccf51de9b4189d01e3397c4a1d8267cf8.jpg", transport: [{ icon: 'ship', color: 'teal-500', label: 'Ferry' }, { icon: 'car', color: 'slate-500', label: 'Transfer' }, { icon: 'plane', color: 'blue-500', label: 'Voo' }] }
+        ];
+
+        function renderPostSailing(containerId, data) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'bg-slate-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition group border border-slate-100';
+                div.innerHTML = `
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="${item.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">${item.date}</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold mb-2">${item.title}</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">${item.desc}</p>
+                        ${item.transport ? `
+                        <div class="pt-2 mt-2 border-t border-slate-100 text-xs font-semibold text-slate-500 uppercase flex items-center gap-2 flex-wrap">
+                            ${item.transport.map(t => `
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="${t.icon}" class="w-4 h-4 text-${t.color}"></i> ${t.label}
+                                </span>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            // Initialize icons after rendering
+            lucide.createIcons();
+        }
+
+        renderPostSailing('post-sailing-a', postSailingDataA);
+        renderPostSailing('post-sailing-b', postSailingDataB);
+
+        // Toggle Opções Plano Terra Antes
+        const preOpcaoABtn = document.getElementById('pre-opcao-a-btn');
+        const preOpcaoBBtn = document.getElementById('pre-opcao-b-btn');
+        const preOpcaoA = document.getElementById('pre-opcao-a');
+        const preOpcaoB = document.getElementById('pre-opcao-b');
+
+        if (preOpcaoABtn && preOpcaoBBtn && preOpcaoA && preOpcaoB) {
+            preOpcaoABtn.addEventListener('click', () => {
+                preOpcaoA.classList.remove('hidden');
+                preOpcaoB.classList.add('hidden');
+                preOpcaoABtn.classList.add('bg-teal-500', 'text-white', 'border-teal-500');
+                preOpcaoABtn.classList.remove('bg-white', 'text-slate-600', 'border-slate-300');
+                preOpcaoBBtn.classList.add('bg-white', 'text-slate-600', 'border-slate-300');
+                preOpcaoBBtn.classList.remove('bg-teal-500', 'text-white', 'border-teal-500');
+            });
+
+            preOpcaoBBtn.addEventListener('click', () => {
+                preOpcaoB.classList.remove('hidden');
+                preOpcaoA.classList.add('hidden');
+                preOpcaoBBtn.classList.add('bg-teal-500', 'text-white', 'border-teal-500');
+                preOpcaoBBtn.classList.remove('bg-white', 'text-slate-600', 'border-slate-300');
+                preOpcaoABtn.classList.add('bg-white', 'text-slate-600', 'border-slate-300');
+                preOpcaoABtn.classList.remove('bg-teal-500', 'text-white', 'border-teal-500');
+            });
+        }
+
+        // Toggle Opções Regresso
+        const postOpcaoABtn = document.getElementById('post-opcao-a-btn');
+        const postOpcaoBBtn = document.getElementById('post-opcao-b-btn');
+        const postOpcaoA = document.getElementById('post-sailing-a');
+        const postOpcaoB = document.getElementById('post-sailing-b');
+
+        if (postOpcaoABtn && postOpcaoBBtn && postOpcaoA && postOpcaoB) {
+            postOpcaoABtn.addEventListener('click', () => {
+                postOpcaoA.classList.remove('hidden');
+                postOpcaoB.classList.add('hidden');
+                postOpcaoABtn.classList.add('bg-orange-500', 'text-white', 'border-orange-500');
+                postOpcaoABtn.classList.remove('bg-white', 'text-slate-600', 'border-slate-300');
+                postOpcaoBBtn.classList.add('bg-white', 'text-slate-600', 'border-slate-300');
+                postOpcaoBBtn.classList.remove('bg-orange-500', 'text-white', 'border-orange-500');
+            });
+
+            postOpcaoBBtn.addEventListener('click', () => {
+                postOpcaoB.classList.remove('hidden');
+                postOpcaoA.classList.add('hidden');
+                postOpcaoBBtn.classList.add('bg-orange-500', 'text-white', 'border-orange-500');
+                postOpcaoBBtn.classList.remove('bg-white', 'text-slate-600', 'border-slate-300');
+                postOpcaoABtn.classList.add('bg-white', 'text-slate-600', 'border-slate-300');
+                postOpcaoABtn.classList.remove('bg-orange-500', 'text-white', 'border-orange-500');
+            });
+        }
+
+        // Budget Logic
+        const budgetBody = document.getElementById('budget-body');
+        let totalVal = 0;
+        budget.forEach(b => {
+            totalVal += b.total;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="py-5">
+                    <span class="font-semibold block text-slate-100">${b.item}</span>
+                    <span class="text-xs text-slate-500">${b.note}</span>
+                </td>
+                <td class="py-5 text-right font-mono text-teal-400 font-bold text-lg">${b.total.toLocaleString()} €</td>
+            `;
+            budgetBody.appendChild(tr);
+        });
+        document.getElementById('budget-total').innerText = totalVal.toLocaleString() + " €";
+        document.getElementById('budget-per-pax').innerText = "~ " + Math.round(totalVal/6).toLocaleString() + " €";
+
+        // Map Initialization
+        var map = L.map('map').setView([42.75, 17.2], 8);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        const pontos = [
+            { lat: 43.5387, lng: 16.2980, nome: "Split (SPU)", tipo: "terra", day: "—" },
+            { lat: 43.1729, lng: 16.4413, nome: "Hvar", tipo: "terra", day: "—" },
+            { lat: 42.6507, lng: 18.0944, nome: "Dubrovnik", tipo: "terra", day: "—" },
+            { lat: 42.6750, lng: 18.0780, nome: "Marina Dubrovnik", tipo: "sailing", day: "1 & 7" },
+            { lat: 42.6780, lng: 18.0048, nome: "Koločep (Donje Čelo)", tipo: "sailing", day: "1" },
+            { lat: 42.6900, lng: 17.9550, nome: "Lopud (Šunj)", tipo: "sailing", day: "2" },
+            { lat: 42.7424, lng: 17.7869, nome: "Šipanska Luka", tipo: "sailing", day: "2" },
+            { lat: 42.7859, lng: 17.3785, nome: "Polače (Mljet)", tipo: "sailing", day: "3" },
+            { lat: 42.7167, lng: 16.8833, nome: "Jurjeva Luka (Lastovo)", tipo: "sailing", day: "4" },
+            { lat: 42.9542, lng: 17.1647, nome: "Badija", tipo: "sailing", day: "5" },
+            { lat: 42.9600, lng: 17.1367, nome: "Korčula", tipo: "sailing", day: "5" },
+            { lat: 42.8899, lng: 17.4536, nome: "Žuljana", tipo: "sailing", day: "6" },
+            { lat: 42.7753, lng: 17.7533, nome: "Marčuleti (Pelješac)", tipo: "sailing", day: "6" }
+        ];
+
+        pontos.forEach(p => {
+            const color = p.tipo === 'terra' ? '#2563eb' : '#0d9488';
+            const icon = L.divIcon({
+                className: 'custom-div-icon',
+                html: `<div style="background-color:${color}; width:16px; height:16px; border-radius:50%; border:2px solid white; box-shadow:0 0 5px rgba(0,0,0,0.3);"></div>`,
+                iconSize: [16, 16],
+                iconAnchor: [8, 8]
+            });
+            const dayLabel = p.day === '—' ? 'Chegada' : 'Dia ' + p.day;
+            L.marker([p.lat, p.lng], { icon: icon }).addTo(map).bindPopup(`<b>${dayLabel}</b><br>${p.nome}`);
+        });
+
+        // Finalize Lucide on dynamic elements
+        lucide.createIcons();
+    </script>
+</body>
+</html>
