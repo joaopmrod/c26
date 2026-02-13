@@ -155,7 +155,7 @@ Dia 8: Sábado, 25 Julho
 **Dia 16 - Quinta, 16 Julho: Chegada e Split**
 - Aterragem em Split (SPU)
 - Visitar Split: Palácio de Diocleciano, Riva (promenada), centro histórico
-- Autocarro ao fim da tarde para Dubrovnik
+- Autocarro Split → Dubrovnik às 19:00 (chegada às 23:05)
 - Dormir em Dubrovnik
 
 **Dia 17 - Sexta, 17 Julho: Explorar Dubrovnik**
@@ -173,7 +173,7 @@ Dia 8: Sábado, 25 Julho
 
 **Dia 25 - Sábado, 25 Julho: Ferry para Hvar**
 - Desembarque do barco de manhã (check-out 08:30)
-- Ferry para Hvar (de manhã)
+- Ferry Dubrovnik → Hvar às 15:00 (chegada às 18:25)
 - Visitar Hvar: cidade histórica, Forte Spanjola
 - Dormir em Hvar
 
