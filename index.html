@@ -29,6 +29,52 @@
         }
         /* Garantir que containers não quebrem layout */
         .min-w-0 { min-width: 0; }
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 1.5rem;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .location-card {
+            transition: all 0.3s ease;
+        }
+        .location-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body class="text-slate-800 bg-slate-50">
@@ -125,7 +171,7 @@
             <!-- Opção A: plano original com Hvar primeiro -->
             <div id="pre-opcao-a" class="grid md:grid-cols-2 gap-8">
                 <!-- Dia 1 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md group">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md group hover:shadow-xl transition-all duration-300 cursor-pointer">
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/712f6e939bd2120e74c6b598111f353595a58416.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                         <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">16 Jul (Qui)</div>
@@ -147,7 +193,7 @@
                     </div>
                 </div>
                 <!-- Dia 2 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md group">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md group hover:shadow-xl transition-all duration-300 cursor-pointer">
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/a23a089d445186f89df198f99d892f7b8c625f5b.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                         <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">17 Jul (Sex)</div>
@@ -167,7 +213,7 @@
             <!-- Opção B: alternativa Split & Dubrovnik -->
             <div id="pre-opcao-b" class="grid md:grid-cols-3 gap-8 hidden">
                 <!-- Dia 16 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md group">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md group hover:shadow-xl transition-all duration-300 cursor-pointer">
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://pplx-res.cloudinary.com/image/upload/v1770921214/pplx_search_images/827ee3fccf51de9b4189d01e3397c4a1d8267cf8.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                         <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">16 Jul (Qui)</div>
@@ -184,7 +230,7 @@
                     </div>
                 </div>
                 <!-- Dia 17 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md group">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md group hover:shadow-xl transition-all duration-300 cursor-pointer">
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/a23a089d445186f89df198f99d892f7b8c625f5b.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                         <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">17 Jul (Sex)</div>
@@ -198,7 +244,7 @@
                     </div>
                 </div>
                 <!-- Dia 18 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md group">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md group hover:shadow-xl transition-all duration-300 cursor-pointer">
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/a23a089d445186f89df198f99d892f7b8c625f5b.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                         <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">18 Jul (Sáb)</div>
@@ -348,6 +394,15 @@
     <footer class="py-12 bg-slate-50 border-t border-slate-200 text-center">
         <p class="text-slate-400 text-sm font-medium tracking-widest uppercase">Adriatic Sailing Adventure • 2026</p>
     </footer>
+
+    <!-- Modal for Day Plans -->
+    <div id="day-plan-modal" class="modal-overlay">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div id="modal-body">
+                <!-- Content will be dynamically inserted -->
+            </div>
+        </div>
+    </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
@@ -594,7 +649,7 @@
             if (!container) return;
             data.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'bg-slate-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition group border border-slate-100';
+                div.className = 'bg-slate-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-slate-100 cursor-pointer';
                 div.innerHTML = `
                     <div class="h-48 overflow-hidden relative">
                         <img src="${item.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
@@ -734,6 +789,615 @@
 
         // Finalize Lucide on dynamic elements
         lucide.createIcons();
+
+        // ===== MODAL FUNCTIONALITY FOR DAY PLANS =====
+        const dayPlansData = {
+            // Pre-sailing Option A
+            'pre-a-day1': {
+                date: "16 Jul (Quinta-feira)",
+                title: "Chegada & Hvar",
+                description: "Primeiro dia na Croácia! Aterragem em Split e viagem de ferry para a ilha mais vibrante do Adriático.",
+                locations: [
+                    {
+                        name: "Aeroporto de Split (SPU)",
+                        time: "11:00 - 13:00",
+                        description: "Chegada ao aeroporto. Transfer para o porto de Split (20-30 min).",
+                        activities: ["Levantamento de bagagem", "Transfer para o porto"],
+                        photo: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80"
+                    },
+                    {
+                        name: "Porto de Split - Ferry Terminal",
+                        time: "13:30 - 15:30",
+                        description: "Embarque no ferry direto para Hvar. Travessia panorâmica pelo Adriático.",
+                        activities: ["Almoço rápido no porto", "Ferry para Hvar (2h)"],
+                        photo: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80"
+                    },
+                    {
+                        name: "Cidade de Hvar",
+                        time: "16:00 - 20:00",
+                        description: "Chegada à ilha mais ensolarada da Europa. Check-in e exploração inicial.",
+                        activities: [
+                            "Check-in no alojamento",
+                            "Passeio pela Praça de São Estêvão",
+                            "Visita ao porto e marina",
+                            "Subida ao Forte Spanjola (vista panorâmica ao pôr-do-sol)"
+                        ],
+                        photo: "https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/712f6e939bd2120e74c6b598111f353595a58416.jpg"
+                    },
+                    {
+                        name: "Jantar em Hvar",
+                        time: "20:30 - 23:00",
+                        description: "Primeira noite croata! Jantar num dos restaurantes junto ao porto.",
+                        activities: [
+                            "Jantar em restaurante local (sugestões: Dalmatino, Gariful)",
+                            "Bebidas no Hula Hula Beach Bar",
+                            "Passeio noturno pelo centro histórico"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80"
+                    }
+                ]
+            },
+            'pre-a-day2': {
+                date: "17 Jul (Sexta-feira)",
+                title: "Rumo a Dubrovnik",
+                description: "Ferry matinal para a Pérola do Adriático. Tarde dedicada a explorar as muralhas medievais.",
+                locations: [
+                    {
+                        name: "Ferry Hvar → Dubrovnik",
+                        time: "08:00 - 11:30",
+                        description: "Viagem de ferry pela costa dálmata. Paisagens espetaculares.",
+                        activities: ["Pequeno-almoço no ferry", "Fotos da costa croata"],
+                        photo: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80"
+                    },
+                    {
+                        name: "Muralhas de Dubrovnik",
+                        time: "13:00 - 16:00",
+                        description: "As muralhas medievais mais bem preservadas da Europa. 2 km de caminhada com vistas incríveis.",
+                        activities: [
+                            "Entrada pelas Muralhas (bilhete ~35€)",
+                            "Caminhada completa (2h)",
+                            "Fotos do Forte Minceta e Forte Bokar",
+                            "Vista para a Cidade Velha e Ilha Lokrum"
+                        ],
+                        photo: "https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/a23a089d445186f89df198f99d892f7b8c625f5b.jpg"
+                    },
+                    {
+                        name: "Stradun e Cidade Velha",
+                        time: "16:30 - 19:00",
+                        description: "A artéria principal da cidade velha. Mármore polido por milhares de passos.",
+                        activities: [
+                            "Passeio pelo Stradun",
+                            "Visita à Fonte de Onofrio",
+                            "Igreja de São Brás",
+                            "Explorar as ruelas medievais"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1555990793-da11153b2473?w=800&q=80"
+                    },
+                    {
+                        name: "Buža Bar - Pôr-do-Sol",
+                        time: "19:30 - 21:00",
+                        description: "Bar escondido nas rochas fora das muralhas. O melhor pôr-do-sol de Dubrovnik.",
+                        activities: [
+                            "Cocktails nas rochas",
+                            "Mergulho no Adriático (se o tempo permitir)",
+                            "Pôr-do-sol sobre o mar"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1624693525515-be3ff3f95ee8?w=800&q=80"
+                    }
+                ]
+            },
+            // Pre-sailing Option B
+            'pre-b-day1': {
+                date: "16 Jul (Quinta-feira)",
+                title: "Visitar Split",
+                description: "Aterragem em Split e exploração da cidade histórica antes de seguir para Dubrovnik.",
+                locations: [
+                    {
+                        name: "Palácio de Diocleciano",
+                        time: "12:00 - 15:00",
+                        description: "Palácio romano do século IV, Património Mundial da UNESCO. O coração de Split.",
+                        activities: [
+                            "Explorar o Peristilo (praça central)",
+                            "Visita à Catedral de São Domnius",
+                            "Subir ao campanário (vista 360°)",
+                            "Caves subterrâneas do palácio"
+                        ],
+                        photo: "https://pplx-res.cloudinary.com/image/upload/v1770921214/pplx_search_images/827ee3fccf51de9b4189d01e3397c4a1d8267cf8.jpg"
+                    },
+                    {
+                        name: "Riva - Passeio Marítimo",
+                        time: "15:30 - 17:00",
+                        description: "O coração social de Split. Palmeiras, cafés e vistas para o porto.",
+                        activities: [
+                            "Passeio ao longo da Riva",
+                            "Café numa esplanada",
+                            "Ver os barcos no porto",
+                            "Compras de última hora"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1584466869497-14d95a7c0b3f?w=800&q=80"
+                    },
+                    {
+                        name: "Marjan Hill",
+                        time: "17:30 - 19:00",
+                        description: "A colina verde de Split. Perfeita para um passeio ao final da tarde.",
+                        activities: [
+                            "Subida ao miradouro",
+                            "Vista panorâmica de Split",
+                            "Fotos do pôr-do-sol"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1624693525515-be3ff3f95ee8?w=800&q=80"
+                    },
+                    {
+                        name: "Autocarro Split → Dubrovnik",
+                        time: "19:00 - 23:05",
+                        description: "Viagem noturna pela costa. Chegada tarde a Dubrovnik.",
+                        activities: ["Autocarro confortável", "Check-in no alojamento em Dubrovnik"],
+                        photo: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&q=80"
+                    }
+                ]
+            },
+            'pre-b-day2': {
+                date: "17 Jul (Sexta-feira)",
+                title: "Explorar Dubrovnik",
+                description: "Dia completo dedicado à Pérola do Adriático.",
+                locations: [
+                    {
+                        name: "Muralhas de Dubrovnik",
+                        time: "09:00 - 12:00",
+                        description: "As muralhas medievais mais bem preservadas da Europa. 2 km de caminhada com vistas incríveis.",
+                        activities: [
+                            "Entrada pelas Muralhas (bilhete ~35€)",
+                            "Caminhada completa (2-3h de manhã cedo)",
+                            "Fotos do Forte Minceta e Forte Bokar",
+                            "Vista para a Cidade Velha e Ilha Lokrum"
+                        ],
+                        photo: "https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/a23a089d445186f89df198f99d892f7b8c625f5b.jpg"
+                    },
+                    {
+                        name: "Stradun e Cidade Velha",
+                        time: "13:00 - 16:00",
+                        description: "Exploração profunda da cidade medieval. Cada ruela conta uma história.",
+                        activities: [
+                            "Almoço num restaurante local",
+                            "Visita ao Palácio do Reitor",
+                            "Fonte de Onofrio",
+                            "Mosteiro Franciscano (farmácia antiga)"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1555990793-da11153b2473?w=800&q=80"
+                    },
+                    {
+                        name: "Forte Lovrijenac",
+                        time: "16:30 - 18:00",
+                        description: "A 'Gibraltar de Dubrovnik'. Forte fora das muralhas com vistas épicas.",
+                        activities: [
+                            "Visita ao forte (incluído no bilhete das muralhas)",
+                            "Local de filmagem de Game of Thrones",
+                            "Vista para a Cidade Velha"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1590074072757-3ee3fc0c1aee?w=800&q=80"
+                    },
+                    {
+                        name: "Buža Bar - Pôr-do-Sol",
+                        time: "19:00 - 21:00",
+                        description: "Bar escondido nas rochas. O melhor pôr-do-sol de Dubrovnik.",
+                        activities: [
+                            "Cocktails nas rochas",
+                            "Mergulho no Adriático",
+                            "Pôr-do-sol sobre o mar"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1624693525515-be3ff3f95ee8?w=800&q=80"
+                    }
+                ]
+            },
+            'pre-b-day3': {
+                date: "18 Jul (Sábado)",
+                title: "Dubrovnik & Preparação",
+                description: "Manhã final em Dubrovnik para compras e últimas visitas. Preparação para o embarque.",
+                locations: [
+                    {
+                        name: "Ilha de Lokrum",
+                        time: "09:00 - 12:30",
+                        description: "Ilha paradisíaca a 10 min de barco. Natureza intocada e pavões selvagens.",
+                        activities: [
+                            "Ferry de 10 min desde o porto velho",
+                            "Passeio pelos jardins botânicos",
+                            "Mergulho no 'Dead Sea' (lago salgado)",
+                            "Ver os pavões selvagens"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80"
+                    },
+                    {
+                        name: "Compras em Dubrovnik",
+                        time: "13:30 - 16:00",
+                        description: "Últimas compras antes de embarcar. Provisões e souvenirs.",
+                        activities: [
+                            "Almoço na cidade",
+                            "Compras no supermercado",
+                            "Souvenirs",
+                            "Preparar bagagem"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80"
+                    },
+                    {
+                        name: "ACI Marina Dubrovnik",
+                        time: "17:00 - 19:00",
+                        description: "Chegada à marina para o embarque no Bali 'Julija'.",
+                        activities: [
+                            "Check-in no barco",
+                            "Arrumação das provisões",
+                            "Briefing de segurança",
+                            "Jantar a bordo"
+                        ],
+                        photo: "https://pplx-res.cloudinary.com/image/upload/v1770921214/pplx_search_images/d3f08e3eeb44a37074d9398d6206aa79bfcbdfd2.jpg"
+                    }
+                ]
+            },
+            // Post-sailing Option A
+            'post-a-day1': {
+                date: "25 Jul (Sábado)",
+                title: "Desembarque & Split",
+                description: "Último dia no barco e viagem de autocarro para Split.",
+                locations: [
+                    {
+                        name: "Desembarque em Dubrovnik",
+                        time: "08:30 - 10:00",
+                        description: "Check-out do barco. Despedida do Bali 'Julija'.",
+                        activities: [
+                            "Arrumação final",
+                            "Check-out da marina",
+                            "Transfer para o centro"
+                        ],
+                        photo: "https://pplx-res.cloudinary.com/image/upload/v1770921214/pplx_search_images/d3f08e3eeb44a37074d9398d6206aa79bfcbdfd2.jpg"
+                    },
+                    {
+                        name: "Última Manhã em Dubrovnik",
+                        time: "10:30 - 17:00",
+                        description: "Últimas horas na Pérola do Adriático antes do autocarro.",
+                        activities: [
+                            "Passeio final pela Cidade Velha",
+                            "Almoço de despedida",
+                            "Compras de última hora",
+                            "Café com vista para o mar"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1555990793-da11153b2473?w=800&q=80"
+                    },
+                    {
+                        name: "Autocarro Dubrovnik → Split",
+                        time: "18:00 - 22:40",
+                        description: "Viagem noturna pela costa. Paisagens ao entardecer.",
+                        activities: ["Autocarro panorâmico", "Chegada a Split", "Check-in no hotel"],
+                        photo: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&q=80"
+                    }
+                ]
+            },
+            'post-a-day2': {
+                date: "26 Jul (Domingo)",
+                title: "Split & Trogir",
+                description: "Dia completo para explorar Split e a vizinha Trogir, ambas Património Mundial da UNESCO.",
+                locations: [
+                    {
+                        name: "Palácio de Diocleciano",
+                        time: "09:00 - 12:00",
+                        description: "Palácio romano do século IV. O coração histórico de Split.",
+                        activities: [
+                            "Explorar o Peristilo",
+                            "Catedral de São Domnius",
+                            "Subir ao campanário",
+                            "Caves subterrâneas"
+                        ],
+                        photo: "https://pplx-res.cloudinary.com/image/upload/v1770921214/pplx_search_images/827ee3fccf51de9b4189d01e3397c4a1d8267cf8.jpg"
+                    },
+                    {
+                        name: "Trogir - Cidade Medieval",
+                        time: "14:00 - 18:00",
+                        description: "Cidade medieval a 30 min de Split. Joia arquitetónica preservada.",
+                        activities: [
+                            "Autocarro ou transfer para Trogir",
+                            "Visita à Catedral de São Lourenço",
+                            "Passeio pelas muralhas",
+                            "Explorar o centro histórico",
+                            "Café junto ao porto"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1624693525515-be3ff3f95ee8?w=800&q=80"
+                    },
+                    {
+                        name: "Riva de Split - Noite",
+                        time: "19:30 - 23:00",
+                        description: "Última noite na Croácia. Celebração junto ao mar.",
+                        activities: [
+                            "Jantar na Riva",
+                            "Bebidas num bar local",
+                            "Passeio noturno pelo palácio iluminado"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80"
+                    }
+                ]
+            },
+            'post-a-day3': {
+                date: "27 Jul (Segunda-feira)",
+                title: "Regresso a Casa",
+                description: "Despedida da Croácia. Voo de regresso.",
+                locations: [
+                    {
+                        name: "Manhã em Split",
+                        time: "07:00 - 09:00",
+                        description: "Últimos momentos na cidade.",
+                        activities: [
+                            "Pequeno-almoço no hotel",
+                            "Arrumação da bagagem",
+                            "Transfer para o aeroporto"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1584466869497-14d95a7c0b3f?w=800&q=80"
+                    },
+                    {
+                        name: "Aeroporto de Split (SPU)",
+                        time: "09:30 - 12:00",
+                        description: "Check-in e embarque. Adeus Croácia!",
+                        activities: [
+                            "Check-in do voo",
+                            "Últimas compras no aeroporto",
+                            "Embarque às 10:00"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80"
+                    }
+                ]
+            },
+            // Post-sailing Option B
+            'post-b-day1': {
+                date: "25 Jul (Sábado)",
+                title: "Ferry para Hvar",
+                description: "Desembarque e viagem para a ilha mais vibrante do Adriático.",
+                locations: [
+                    {
+                        name: "Desembarque em Dubrovnik",
+                        time: "08:30 - 14:00",
+                        description: "Check-out do barco e manhã em Dubrovnik antes do ferry.",
+                        activities: [
+                            "Check-out da marina",
+                            "Último passeio em Dubrovnik",
+                            "Almoço na Cidade Velha",
+                            "Transfer para o porto"
+                        ],
+                        photo: "https://pplx-res.cloudinary.com/image/upload/v1770921214/pplx_search_images/d9b5d42f071224202b923486bddb08aff7aa23d4.jpg"
+                    },
+                    {
+                        name: "Ferry Dubrovnik → Hvar",
+                        time: "15:00 - 18:25",
+                        description: "Travessia pelo Adriático. Vistas da costa e ilhas.",
+                        activities: ["Ferry panorâmico", "Relaxar no deck", "Fotos da costa"],
+                        photo: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80"
+                    },
+                    {
+                        name: "Primeira Noite em Hvar",
+                        time: "19:00 - 23:00",
+                        description: "Chegada à ilha mais ensolarada. Noite animada.",
+                        activities: [
+                            "Check-in no alojamento",
+                            "Jantar no porto",
+                            "Drinks no Hula Hula Beach Bar",
+                            "Explorar a vida noturna de Hvar"
+                        ],
+                        photo: "https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/712f6e939bd2120e74c6b598111f353595a58416.jpg"
+                    }
+                ]
+            },
+            'post-b-day2': {
+                date: "26 Jul (Domingo)",
+                title: "Explorar Hvar",
+                description: "Dia completo na ilha. História, praias e vida noturna.",
+                locations: [
+                    {
+                        name: "Forte Spanjola",
+                        time: "09:00 - 11:00",
+                        description: "Fortaleza veneziana com vista 360° sobre Hvar e as Ilhas Pakleni.",
+                        activities: [
+                            "Subida ao forte (15 min a pé)",
+                            "Vista panorâmica da cidade",
+                            "Fotos das ilhas Pakleni",
+                            "Explorar as muralhas"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1624693525515-be3ff3f95ee8?w=800&q=80"
+                    },
+                    {
+                        name: "Praias de Hvar",
+                        time: "11:30 - 16:00",
+                        description: "As melhores praias da ilha. Água cristalina.",
+                        activities: [
+                            "Praia de Dubovica (10 min de carro)",
+                            "Almoço numa taverna local",
+                            "Mergulho e snorkeling",
+                            "Relaxar ao sol"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80"
+                    },
+                    {
+                        name: "Centro Histórico de Hvar",
+                        time: "17:00 - 19:00",
+                        description: "Exploração da cidade antiga. Arquitetura renascentista.",
+                        activities: [
+                            "Praça de São Estêvão",
+                            "Catedral de Santo Estêvão",
+                            "Teatro Arsenal (mais antigo da Europa)",
+                            "Ruelas medievais"
+                        ],
+                        photo: "https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/712f6e939bd2120e74c6b598111f353595a58416.jpg"
+                    },
+                    {
+                        name: "Vida Noturna de Hvar",
+                        time: "20:00 - 00:00",
+                        description: "Hvar é conhecida pela melhor vida noturna da Croácia.",
+                        activities: [
+                            "Jantar num restaurante à beira-mar",
+                            "Carpe Diem Beach Club",
+                            "Bares junto ao porto",
+                            "Festa até tarde"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80"
+                    }
+                ]
+            },
+            'post-b-day3': {
+                date: "27 Jul (Segunda-feira)",
+                title: "Hvar & Regresso",
+                description: "Última manhã na ilha e viagem de regresso via Split.",
+                locations: [
+                    {
+                        name: "Manhã Final em Hvar",
+                        time: "08:00 - 11:00",
+                        description: "Últimos momentos na ilha do sol.",
+                        activities: [
+                            "Pequeno-almoço com vista para o mar",
+                            "Passeio final pelo porto",
+                            "Compras de souvenirs",
+                            "Café na praça principal"
+                        ],
+                        photo: "https://pplx-res.cloudinary.com/image/upload/v1770921189/pplx_search_images/712f6e939bd2120e74c6b598111f353595a58416.jpg"
+                    },
+                    {
+                        name: "Ferry Hvar → Split",
+                        time: "12:00 - 13:50",
+                        description: "Última travessia pelo Adriático.",
+                        activities: ["Ferry para Split", "Vistas finais das ilhas"],
+                        photo: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80"
+                    },
+                    {
+                        name: "Transfer e Voo de Regresso",
+                        time: "14:30 - 17:00",
+                        description: "Do porto de Split direto para o aeroporto. Despedida da Croácia.",
+                        activities: [
+                            "Transfer porto → aeroporto",
+                            "Check-in do voo",
+                            "Embarque e regresso a casa"
+                        ],
+                        photo: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80"
+                    }
+                ]
+            }
+        };
+
+        // Modal Functions
+        const modal = document.getElementById('day-plan-modal');
+        const modalBody = document.getElementById('modal-body');
+
+        function openDayPlanModal(planKey) {
+            const plan = dayPlansData[planKey];
+            if (!plan) return;
+
+            modalBody.innerHTML = `
+                <div class="sticky top-0 bg-white border-b border-slate-200 p-6 flex justify-between items-start z-10">
+                    <div>
+                        <span class="text-sm font-semibold text-teal-600 uppercase tracking-wide">${plan.date}</span>
+                        <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mt-1">${plan.title}</h2>
+                        <p class="text-slate-600 mt-2">${plan.description}</p>
+                    </div>
+                    <button onclick="closeDayPlanModal()" class="ml-4 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition flex-shrink-0">
+                        <i data-lucide="x" class="w-6 h-6 text-slate-600"></i>
+                    </button>
+                </div>
+                <div class="p-6 space-y-6">
+                    ${plan.locations.map((loc, idx) => `
+                        <div class="location-card bg-slate-50 rounded-2xl overflow-hidden border border-slate-200">
+                            <div class="grid md:grid-cols-5 gap-0">
+                                <div class="md:col-span-2 h-64 md:h-auto relative">
+                                    <img src="${loc.photo}" alt="${loc.name}" class="absolute inset-0 w-full h-full object-cover">
+                                    <div class="absolute top-4 left-4 bg-teal-600 text-white px-3 py-1 rounded-full text-sm font-bold">
+                                        ${loc.time}
+                                    </div>
+                                </div>
+                                <div class="md:col-span-3 p-6">
+                                    <div class="flex items-start gap-3 mb-3">
+                                        <div class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 font-bold text-sm flex-shrink-0">
+                                            ${idx + 1}
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-slate-900">${loc.name}</h3>
+                                            <p class="text-slate-600 text-sm mt-1">${loc.description}</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 bg-white rounded-xl p-4 border border-slate-200">
+                                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                            <i data-lucide="check-circle" class="w-4 h-4 text-teal-500"></i> Atividades
+                                        </h4>
+                                        <ul class="space-y-2">
+                                            ${loc.activities.map(act => `
+                                                <li class="flex items-start gap-2 text-sm text-slate-700">
+                                                    <i data-lucide="chevron-right" class="w-4 h-4 text-teal-500 mt-0.5 flex-shrink-0"></i>
+                                                    <span>${act}</span>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="sticky bottom-0 bg-gradient-to-t from-white via-white to-transparent p-6 border-t border-slate-200">
+                    <button onclick="closeDayPlanModal()" class="w-full px-6 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold transition flex items-center justify-center gap-2">
+                        <i data-lucide="check" class="w-5 h-5"></i> Fechar Plano
+                    </button>
+                </div>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closeDayPlanModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Make functions global
+        window.openDayPlanModal = openDayPlanModal;
+        window.closeDayPlanModal = closeDayPlanModal;
+
+        // Close modal on overlay click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeDayPlanModal();
+            }
+        });
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeDayPlanModal();
+            }
+        });
+
+        // Add click handlers to Pre-Sailing Option A cards
+        document.querySelectorAll('#pre-opcao-a > div').forEach((card, idx) => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+                openDayPlanModal(`pre-a-day${idx + 1}`);
+            });
+        });
+
+        // Add click handlers to Pre-Sailing Option B cards
+        document.querySelectorAll('#pre-opcao-b > div').forEach((card, idx) => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+                openDayPlanModal(`pre-b-day${idx + 1}`);
+            });
+        });
+
+        // Add click handlers to Post-Sailing Option A cards
+        document.querySelectorAll('#post-sailing-a > div').forEach((card, idx) => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+                openDayPlanModal(`post-a-day${idx + 1}`);
+            });
+        });
+
+        // Add click handlers to Post-Sailing Option B cards
+        document.querySelectorAll('#post-sailing-b > div').forEach((card, idx) => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+                openDayPlanModal(`post-b-day${idx + 1}`);
+            });
+        });
     </script>
 </body>
 </html>
