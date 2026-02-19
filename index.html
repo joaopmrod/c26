@@ -385,12 +385,17 @@
                             </tr>
                         </thead>
                         <tbody id="budget-body" class="divide-y divide-slate-700/50">
-                            <!-- JS Inject -->
+                            <tr><td class="py-5"><span class="font-semibold block text-slate-100">Charter Barco (Bali Catsmart)</span><span class="text-xs text-slate-500">Valor base do aluguer</span></td><td class="py-5 text-right font-mono text-teal-400 font-bold text-lg">4.600 €</td></tr>
+                            <tr><td class="py-5"><span class="font-semibold block text-slate-100">Extras Barco (Fuel + Seguro + Taxas)</span><span class="text-xs text-slate-500">Combustível, Taxa Turística e Seguro</span></td><td class="py-5 text-right font-mono text-teal-400 font-bold text-lg">700 €</td></tr>
+                            <tr><td class="py-5"><span class="font-semibold block text-slate-100">Alojamento Terra (4 Noites)</span><span class="text-xs text-slate-500">Estimativa Airbnb Julho</span></td><td class="py-5 text-right font-mono text-teal-400 font-bold text-lg">1.200 €</td></tr>
+                            <tr><td class="py-5"><span class="font-semibold block text-slate-100">Supermercado (Comida/Bebida)</span><span class="text-xs text-slate-500">Compras para a bordo</span></td><td class="py-5 text-right font-mono text-teal-400 font-bold text-lg">800 €</td></tr>
+                            <tr><td class="py-5"><span class="font-semibold block text-slate-100">Transportes (Ferries + Bus + Uber)</span><span class="text-xs text-slate-500">Logística interna</span></td><td class="py-5 text-right font-mono text-teal-400 font-bold text-lg">600 €</td></tr>
+                            <tr><td class="py-5"><span class="font-semibold block text-slate-100">Parques Nacionais</span><span class="text-xs text-slate-500">Mljet e Lastovo</span></td><td class="py-5 text-right font-mono text-teal-400 font-bold text-lg">300 €</td></tr>
                         </tbody>
                         <tfoot>
                             <tr class="bg-slate-900/40">
                                 <td class="py-8 pl-4 text-xl font-bold uppercase">Total Estimado</td>
-                                <td id="budget-total" class="py-8 pr-4 text-right text-3xl font-bold text-teal-400">0 €</td>
+                                <td id="budget-total" class="py-8 pr-4 text-right text-3xl font-bold text-teal-400">8.200 €</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -401,7 +406,7 @@
                         <p class="text-xs text-white/70">Alojamento, Barco, Alimentação e Transportes Internos</p>
                     </div>
                     <div class="bg-white/10 backdrop-blur-md px-8 py-4 rounded-2xl border border-white/20">
-                        <span id="budget-per-pax" class="text-4xl font-black text-white">~ 0 €</span>
+                        <span id="budget-per-pax" class="text-4xl font-black text-white">~ 1.367 €</span>
                     </div>
                 </div>
             </div>
@@ -547,15 +552,6 @@
                     { time: "17:30", text: "Entrada na ACI Marina Dubrovnik." },
                     { time: "20:00", text: "Jantar a bordo na marina (limpar o frigorífico) ou ir à cidade." }
                 ] }
-        ];
-
-        const budget = [
-            { item: "Charter Barco (Bali Catsmart)", total: 4600, note: "Valor base do aluguer" },
-            { item: "Extras Barco (Fuel + Seguro + Taxas)", total: 700, note: "Combustível, Taxa Turística e Seguro" },
-            { item: "Alojamento Terra (4 Noites)", total: 1200, note: "Estimativa Airbnb Julho" },
-            { item: "Supermercado (Comida/Bebida)", total: 800, note: "Compras para a bordo" },
-            { item: "Transportes (Ferries + Bus + Uber)", total: 600, note: "Logística interna" },
-            { item: "Parques Nacionais", total: 300, note: "Mljet e Lastovo" }
         ];
 
         // Accordion Render
@@ -756,24 +752,6 @@
                 postOpcaoABtn.classList.remove('bg-orange-500', 'text-white', 'border-orange-500');
             });
         }
-
-        // Budget Logic
-        const budgetBody = document.getElementById('budget-body');
-        let totalVal = 0;
-        budget.forEach(b => {
-            totalVal += b.total;
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="py-5">
-                    <span class="font-semibold block text-slate-100">${b.item}</span>
-                    <span class="text-xs text-slate-500">${b.note}</span>
-                </td>
-                <td class="py-5 text-right font-mono text-teal-400 font-bold text-lg">${b.total.toLocaleString()} €</td>
-            `;
-            budgetBody.appendChild(tr);
-        });
-        document.getElementById('budget-total').innerText = totalVal.toLocaleString() + " €";
-        document.getElementById('budget-per-pax').innerText = "~ " + Math.round(totalVal/6).toLocaleString() + " €";
 
         // Map Initialization
         var map = L.map('map').setView([42.75, 17.2], 8);
