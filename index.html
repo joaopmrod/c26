@@ -1459,6 +1459,59 @@
                 openDayPlanModal(`post-b-day${idx + 1}`);
             });
         });
+
+        // ===== TOGGLE PLAN B VISIBILITY =====
+        let planBVisible = false;
+        const togglePlanBBtn = document.getElementById('toggle-plan-b-btn');
+        const planBChevron = document.getElementById('plan-b-chevron');
+        const preOpcaoB = document.getElementById('pre-opcao-b');
+        const postOpcaoB = document.getElementById('post-sailing-b');
+        const preToggleButtons = document.getElementById('pre-toggle-buttons');
+        const postToggleButtons = document.getElementById('post-toggle-buttons');
+
+        if (togglePlanBBtn) {
+            togglePlanBBtn.addEventListener('click', () => {
+                planBVisible = !planBVisible;
+                
+                if (planBVisible) {
+                    // Show toggle buttons
+                    preToggleButtons.classList.remove('hidden');
+                    postToggleButtons.classList.add('hidden');
+                    
+                    // Update button text and icon
+                    const btnText = togglePlanBBtn.querySelector('span');
+                    const btnIcon = togglePlanBBtn.querySelector('[data-lucide="eye"]');
+                    if (btnText) btnText.textContent = 'Ocultar Plano Alternativo (Opção B)';
+                    if (btnIcon) btnIcon.setAttribute('data-lucide', 'eye-off');
+                    if (planBChevron) planBChevron.style.transform = 'rotate(180deg)';
+                    
+                    // Smooth scroll to the first section
+                    setTimeout(() => {
+                        document.getElementById('plano-terra')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                } else {
+                    // Hide toggle buttons and Plan B sections
+                    preToggleButtons.classList.add('hidden');
+                    postToggleButtons.classList.add('hidden');
+                    preOpcaoB.classList.add('hidden');
+                    postOpcaoB.classList.add('hidden');
+                    
+                    // Ensure Option A is visible
+                    document.getElementById('pre-opcao-a')?.classList.remove('hidden');
+                    document.getElementById('post-sailing-a')?.classList.remove('hidden');
+                    
+                    // Update button text and icon
+                    const btnText = togglePlanBBtn.querySelector('span');
+                    const btnIcon = togglePlanBBtn.querySelector('[data-lucide="eye-off"]');
+                    if (btnText) btnText.textContent = 'Ver Plano Alternativo (Opção B)';
+                    if (btnIcon) btnIcon.setAttribute('data-lucide', 'eye');
+                    if (planBChevron) planBChevron.style.transform = 'rotate(0deg)';
+                }
+                
+                // Reinitialize Lucide icons
+                lucide.createIcons();
+            });
+        }
     </script>
 </body>
 </html>
