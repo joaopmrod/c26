@@ -75,18 +75,6 @@
             transform: translateY(-4px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
         }
-        /* Slider Bali Catsmart */
-        .boat-slider { overflow: hidden; position: relative; }
-        .boat-slider-track { display: flex; transition: transform 0.5s ease-out; }
-        .boat-slider-slide { min-width: 100%; flex-shrink: 0; }
-        .boat-slider-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; z-index: 10; cursor: pointer; transition: all 0.2s; opacity: 0.9; }
-        .boat-slider-btn:hover { opacity: 1; background: teal; color: white; }
-        .boat-slider-btn.prev { left: 12px; }
-        .boat-slider-btn.next { right: 12px; }
-        .boat-slider-dots { position: absolute; bottom: 16px; left: 0; right: 0; display: flex; gap: 8px; justify-content: center; z-index: 10; }
-        .boat-slider-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: background 0.2s; }
-        .boat-slider-dot:hover { background: rgba(255,255,255,0.9); }
-        .boat-slider-dot.active { background: #0d9488; }
     </style>
 </head>
 <body class="text-slate-800 bg-slate-50">
@@ -295,19 +283,8 @@
         <div class="container mx-auto px-4 max-w-6xl">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="relative">
-                    <div class="boat-slider rounded-3xl overflow-hidden shadow-2xl relative z-10 aspect-[4/3] bg-slate-100">
-                        <div class="boat-slider-track h-full" id="boat-slider-track">
-                            <div class="boat-slider-slide h-full"><img src="https://pplx-res.cloudinary.com/image/upload/v1770921214/pplx_search_images/d3f08e3eeb44a37074d9398d6206aa79bfcbdfd2.jpg" alt="Bali Catsmart Julija - vista exterior" class="w-full h-full object-cover"></div>
-                            <div class="boat-slider-slide h-full"><img src="https://pplx-res.cloudinary.com/image/upload/v1770921190/pplx_search_images/407a08c6af74f11c55773f413ca552a23bda045c.jpg" alt="Bali Catsmart - marina" class="w-full h-full object-cover"></div>
-                            <div class="boat-slider-slide h-full"><img src="https://pplx-res.cloudinary.com/image/upload/v1770921173/pplx_search_images/5ebbda768e2aadf1b1818966087608d8f1e195fd.jpg" alt="Bali Catsmart - ancoradouro" class="w-full h-full object-cover"></div>
-                            <div class="boat-slider-slide h-full"><img src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?auto=format&fit=crop&w=1200&q=80" alt="Catamarã - interior e convés" class="w-full h-full object-cover"></div>
-                            <div class="boat-slider-slide h-full"><img src="https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=80" alt="Catamarã navegando" class="w-full h-full object-cover"></div>
-                            <div class="boat-slider-slide h-full"><img src="https://images.pexels.com/photos/2404949/pexels-photo-2404949.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Bali Catsmart - parede de trás aberta e mesa posta" class="w-full h-full object-cover"></div>
-                            <div class="boat-slider-slide h-full"><img src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Bali Catsmart - cabine" class="w-full h-full object-cover"></div>
-                        </div>
-                        <button type="button" class="boat-slider-btn prev" id="boat-slider-prev" aria-label="Imagem anterior"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>
-                        <button type="button" class="boat-slider-btn next" id="boat-slider-next" aria-label="Imagem seguinte"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>
-                        <div class="boat-slider-dots" id="boat-slider-dots"></div>
+                    <div class="rounded-3xl overflow-hidden shadow-2xl relative z-10 aspect-video bg-slate-100">
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/o7SUI5jKljY?rel=0" title="Bali Catsmart - Vídeo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     </div>
                     <div class="absolute -top-6 -left-6 w-32 h-32 bg-teal-100 rounded-full opacity-50 blur-2xl -z-10"></div>
                 </div>
@@ -470,31 +447,6 @@
         document.addEventListener('DOMContentLoaded', function() {
         // Init Lucide Icons (seguro se ainda não carregou)
         try { if (typeof lucide !== 'undefined') lucide.createIcons(); } catch(e) {}
-
-        // Boat Slider (Bali Catsmart)
-        (function() {
-            const track = document.getElementById('boat-slider-track');
-            const prevBtn = document.getElementById('boat-slider-prev');
-            const nextBtn = document.getElementById('boat-slider-next');
-            const dotsEl = document.getElementById('boat-slider-dots');
-            if (!track) return;
-            const slides = track.querySelectorAll('.boat-slider-slide');
-            const total = slides.length;
-            let current = 0;
-            function goTo(i) {
-                current = (i + total) % total;
-                track.style.transform = `translateX(-${current * 100}%)`;
-                dotsEl.querySelectorAll('.boat-slider-dot').forEach((d, idx) => d.classList.toggle('active', idx === current));
-            }
-            for (let i = 0; i < total; i++) {
-                const dot = document.createElement('span');
-                dot.className = 'boat-slider-dot' + (i === 0 ? ' active' : '');
-                dot.addEventListener('click', () => goTo(i));
-                dotsEl.appendChild(dot);
-            }
-            prevBtn?.addEventListener('click', () => goTo(current - 1));
-            nextBtn?.addEventListener('click', () => goTo(current + 1));
-        })();
 
         // Navbar Scroll Logic
         const navbar = document.getElementById('navbar');
