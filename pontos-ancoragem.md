@@ -11,7 +11,7 @@ Tabela de referência dos pontos de paragem onde é necessário ancorar durante 
 | **2** | Dom, 19 Jul | **Šipanska Luka, Šipan** | Ancoradouro Livre | 42.7424°N, 17.7869°E | [Ver no Navily](https://www.navily.com/carte?q=Šipanska%20Luka%20Šipan) |
 | **3** | Seg, 20 Jul | **Polače, Mljet** | Ancoradouro Livre (Parque Nacional) | 42.7859°N, 17.3785°E | [Ver no Navily](https://www.navily.com/carte?q=Polače%20Mljet) |
 | **4** | Ter, 21 Jul | **Lastovnjaci** | Ancoradouro Livre | 42.7167°N, 16.9500°E | [Ver no Navily](https://www.navily.com/carte?q=Lastovnjaci) |
-| **4** | Ter, 21 Jul | **Jurjeva Luka, Lastovo** | Ancoradouro Livre (Parque Natural) | 42.7167°N, 16.8833°E | [Ver no Navily](https://www.navily.com/carte?q=Jurjeva%20Luka%20Lastovo) |
+| **4** | Ter, 21 Jul | **Mali Lago, Lastovo** | Ancoradouro Livre (Parque Natural, zona norte) | 42.7680°N, 16.8254°E | [Ver no Navily](https://www.navily.com/carte?q=Mali%20Lago%20Lastovo) |
 | **5** | Qua, 22 Jul | **Badija, Korčula** | Ancoradouro Livre | 42.9542°N, 17.1647°E | [Ver no Navily](https://www.navily.com/carte?q=Badija%20Korčula) |
 | **5** | Qua, 22 Jul | **ACI Marina Korčula** | Marina (dormida) | 42.9583°N, 17.1367°E | [Ver no Navily](https://www.navily.com/port/aci-marina-korcula/1396) |
 | **5** | Qua, 22 Jul | **Uvala Luka, Korčula** | Ancoradouro Livre (alternativa económica) | 42.9600°N, 17.1500°E | [Ver no Navily](https://www.navily.com/carte?q=Uvala%20Luka%20Korčula) |
@@ -33,7 +33,7 @@ Tabela de referência dos pontos de paragem onde é necessário ancorar durante 
 
 - **Ancoradouro Livre**: Ancoragem gratuita, sem necessidade de reserva. Fundo geralmente de areia ou lama, boa tença.
 - **Ancoradouro Livre (Parque Nacional)**: Ancoragem gratuita, mas requer bilhete de entrada no parque (ex: Mljet ~60-100€ barco + bilhetes por pessoa).
-- **Ancoradouro Livre (Parque Natural)**: Ancoragem gratuita, mas pode haver taxa do parque natural (ex: Lastovo ~30-40€/barco).
+- **Ancoradouro Livre (Parque Natural)**: Ancoragem gratuita, mas pode haver taxa do parque natural (ex: Mali Lago, Lastovo, ~30-40€/barco).
 - **Ancoradouro Livre (Selvagem)**: Ancoragem gratuita em locais remotos sem infraestrutura.
 - **Marina**: Ancoragem paga em marina (ex: ACI Marina Dubrovnik, ACI Marina Korčula).
 

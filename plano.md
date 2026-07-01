@@ -86,11 +86,11 @@ Atividade: Ancorar no meio dos ilhéus desertos para banhos. Água turquesa surr
 
 13:00: Almoço a Bordo.
 
-15:00: Navegação (1h 00m) para Jurjeva Luka (Baía grande e fechada, perto de Pasadur, antiga base militar).
+15:00: Navegação (1h 00m) para Mali Lago (enseada estreita e fechada no extremo norte da ilha, perto de Pasadur; canal de entrada em zigue-zague, atenção aos baixios).
 
-Porquê aqui? Zaklopatica é cheia de restaurantes a "obrigar" a jantar. Skrivena Luka está cheia de boias pagas. Jurjeva Luka é mais selvagem e protegida (Grátis + Taxa do Parque Natural de Lastovo, ~30-40€ barco).
+Porquê aqui? Zaklopatica é cheia de restaurantes a "obrigar" a jantar. Skrivena Luka está cheia de boias pagas. Mali Lago é mais selvagem e recolhido — água turquesa, vegetação quase tropical e abrigo excelente em qualquer condição (Grátis).
 
-Alternativa: Baía de Skrivena Luka (Porto Escondido), mas tente ancorar na zona livre (se houver espaço entre as boias).
+Alternativa: Zaklopatica ou Baía de Skrivena Luka (Porto Escondido), mas tente ancorar na zona livre (se houver espaço entre as boias).
 
 20:00: Jantar a Bordo. Ver o céu estrelado (Lastovo é o local mais escuro da Croácia).
 
