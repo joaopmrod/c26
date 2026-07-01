@@ -104,13 +104,13 @@ Dia 5: Quarta, 22 Julho | A Ponta de Korčula
 
 Atividade: Ir a terra ver os veados que vêm comer à mão.
 
-15:30: Breve navegação (20 min) para ancorar na Baía de Luka (a leste da cidade de Korčula) ou Uvala Kneža.
+15:30: Breve navegação (20 min) até à ACI Marina Korčula.
 
-Nota: A Marina ACI Korčula é caríssima (~120€+). A opção "livre" é ancorar numa baía próxima (Luka) e ir de táxi-boat ou dinghy (se o mar permitir) até à cidade.
+Nota: A Marina ACI Korčula é a única noite de marina de todo o roteiro (~120€+), e vale o investimento pontual: eletricidade em terra para carregar tudo, água ilimitada para um duche quente demorado, possibilidade de lavar roupa e cidade medieval a pé do pontão. Alternativa económica: ancorar numa baía próxima (Luka ou Uvala Kneža) e ir de táxi-boat ou dinghy (se o mar permitir) até à cidade.
 
-17:00: Visita à cidade de Korčula.
+17:00: Visita à cidade de Korčula, mesmo à porta da marina.
 
-20:30: Jantar a Bordo na baía escolhida.
+20:30: Jantar num restaurante da cidade murada ou a bordo, e uma noite tranquila amarrados em terra para recarregar energias antes dos últimos dias de navegação.
 
 Dia 6: Quinta, 23 Julho | O Segredo de Pelješac
 
