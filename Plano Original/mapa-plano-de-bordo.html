@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapa — Plano de Bordo · Elafiti · Mljet · Lastovo · Korčula · Pelješac (18–25 Jul 2026)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+  #map{height:100%}
+  .titlebox{background:rgba(255,255,255,.95);padding:10px 14px;border-radius:8px;box-shadow:0 1px 5px rgba(0,0,0,.4);max-width:280px}
+  .titlebox h1{font-size:15px;margin:0 0 4px}
+  .titlebox p{font-size:12px;margin:2px 0;color:#333}
+  .legend{background:rgba(255,255,255,.95);padding:8px 12px;border-radius:8px;box-shadow:0 1px 5px rgba(0,0,0,.4);font-size:12px;line-height:1.7}
+  .legend .sw{display:inline-block;width:18px;height:4px;margin-right:6px;vertical-align:middle;border-radius:2px}
+  .legend .dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:8px;vertical-align:middle;border:2px solid #fff;box-shadow:0 0 2px rgba(0,0,0,.6)}
+  .popup h3{margin:0 0 4px;font-size:14px}
+  .popup .tag{display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:9px;color:#fff;margin-bottom:5px}
+  .popup p{margin:3px 0;font-size:12px}
+  .popup a{color:#0a66c2}
+  .leaflet-tooltip.daylab{background:transparent;border:none;box-shadow:none;font-weight:700;font-size:11px}
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+const map = L.map('map').setView([42.83, 17.45], 10);
+
+const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {maxZoom: 18, attribution:'&copy; OpenStreetMap'}).addTo(map);
+const seamap = L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
+  {maxZoom: 18, attribution:'&copy; OpenSeaMap', opacity:.9}).addTo(map);
+
+// ---------- Cores por dia ----------
+const C = {1:'#e63946',2:'#f4890b',3:'#2a9d8f',4:'#264653',5:'#7b2d8b',6:'#0a66c2',7:'#588157'};
+
+// ---------- Waypoints de rota (aprox — confirmar na carta) ----------
+const WP = {
+  aci_dbk:[42.6697,18.1256], foz:[42.6625,18.0870], grebeni:[42.6530,18.0430],
+  kolocep:[42.6790,18.0040], sunj:[42.6790,17.9545], vrata:[42.7000,17.9200],
+  sipluka:[42.7287,17.8592], olipa:[42.7480,17.7800], okuklje:[42.7250,17.6800],
+  sobra:[42.7440,17.6030], mljetN:[42.7750,17.4800], polent:[42.7960,17.4000],
+  polace:[42.7903,17.3772], goli:[42.7700,17.3000], saplun:[42.7800,16.9862],
+  lastNE:[42.7900,16.9200], lastN:[42.7900,16.8600], mlent:[42.7760,16.8200],
+  malilago:[42.7647,16.8225], pupnatska:[42.9100,17.0250], raznjic:[42.9080,17.2100],
+  badija:[42.9500,17.1625], acikorc:[42.9583,17.1367], peljE:[42.9350,17.2500],
+  zuljana:[42.8920,17.4530], peljSE:[42.8200,17.5800], marculeti:[42.7753,17.7533],
+  jakljan:[42.7383,17.8280], sudjuradj:[42.7000,17.9150], gruz:[42.6630,18.0850], kolNE1:[42.6690,18.0300], kolNE2:[42.6880,18.0080], kolW:[42.6690,17.9830], kolNW:[42.6860,17.9960], sunjapp:[42.6690,17.9450], lopW:[42.6810,17.9160], sipSW:[42.6880,17.8700], sipW:[42.7160,17.8200], siptip:[42.7420,17.8060], sipapp:[42.7440,17.8480], kanalK1:[42.7060,17.9520], kanalK2:[42.6860,18.0320]
+};
+
+// ---------- Pernadas ----------
+const legs = [
+ {d:1, nome:'Dia 1 · Sáb 18 — ACI Dubrovnik → Donje Čelo', pts:['aci_dbk','foz','grebeni','kolNE1','kolNE2','kolocep'], info:'7,5 nm · ETD 18:30 → ETA ~19:35 (7 nós)'},
+ {d:2, nome:'Dia 2 · Dom 19 — Koločep → Šunj → Šipanska Luka', pts:['kolocep','kolNW','sunj','sunjapp','lopW','vrata','sipSW','sipW','siptip','sipapp','sipluka'], info:'~14 nm · 10:00→10:20 · 15:00→16:40 (contornar a ponta NW de Šipan)'},
+ {d:3, nome:'Dia 3 · Seg 20 — Šipanska Luka → Polače (Mljet)', pts:['sipluka','sipapp','siptip','olipa','okuklje','sobra','mljetN','polent','polace'], info:'23 nm ⚠ pernada mais longa · ETD 08:30 → ETA 11:50'},
+ {d:4, nome:'Dia 4 · Ter 21 — Polače → Saplun → Mali Lago', pts:['polace','polent','goli','saplun','lastNE','lastN','mlent','malilago'], info:'28 nm · 08:30→11:15 · 15:00→16:20'},
+ {d:5, nome:'Dia 5 · Qua 22 — Mali Lago → Pupnatska → Badija → Korčula', pts:['malilago','mlent','pupnatska','raznjic','badija','acikorc'], info:'26 nm · 08:30→10:20 · 13:30→15:10 · 16:30→16:45'},
+ {d:6, nome:'Dia 6 · Qui 23 — Korčula → Žuljana → Marčuleti', pts:['acikorc','peljE','zuljana','peljSE','marculeti'], info:'30 nm · 09:30→11:40 · 15:00→17:10 · dia de vela (popa)'},
+ {d:7, nome:'Dia 7 · Sex 24 — Marčuleti → Jakljan → Gruž → ACI Dubrovnik', pts:['marculeti','jakljan','sudjuradj','kanalK1','kanalK2','gruz','aci_dbk'], info:'18,5 nm · 09:30→10:00 · 13:30→15:25 · 16:15→16:30'}
+];
+
+// ---------- Pontos (tipo: noite, banho, marina, fuel, base) ----------
+const TIPO = {
+  noite:{cor:'#1d3557', rot:'Ancoragem (noite)'},
+  banho:{cor:'#00b4d8', rot:'Banho / almoço'},
+  marina:{cor:'#7b2d8b', rot:'Marina'},
+  fuel:{cor:'#e63946', rot:'Combustível'},
+  base:{cor:'#333333', rot:'Base charter'}
+};
+const IMG = 'https://api.navily.com/mediaRouter/';
+const pontos = [
+ {wp:'aci_dbk', t:'base', nome:'ACI Marina Dubrovnik (Komolac)', dia:'Dia 1 e 7–8', horas:'Check-in 17:00 (D1) · Largada 18:30 (D1) — regresso: chegada 16:30 (D7) · check-out 08:30 (D8)', txt:'Check-in Sáb 18, 17:00 · Check-out Sáb 25, 08:30. Base do "Julija". Piscina da marina; autocarro para a cidade velha.', navu:'https://www.navily.com/port/aci-marina-dubrovnik/1302', wiki:'Rijeka_Dubrova%C4%8Dka',
+  pq:'Base do charter — não é escolha, é o ponto de partida/chegada obrigatório.'},
+ {wp:'kolocep', t:'noite', nome:'Donje Čelo — Koločep', dia:'Noite 1', horas:'Chegada 19:20 (D1) · Largada 10:00 (D2)', txt:'⚠ Navily marca FUNDEIO PROIBIDO (zona regulamentada) — contar com apanhar boia (paga) ou ir ao plano B. Fundo areia/ervas. Aberta a NW (maestral morre ao pôr do sol). Plano B: Suđurađ (Šipan) ou Gornje Čelo (lado E de Koločep).', navu:'https://www.navily.com/mouillage/donje-celo/40611', img:IMG+'LivkTgnadcFVof9pl14pweZsrLvzt9fY0uhn9RW4pUVwhqxF6sUDbNuv8wQW8j8Y?w=600',
+  pq:'A baía mais próxima da base alcançável com luz do dia depois de um check-in às 17h (~50 min a 7 nós). Primeira noite tranquila longe da marina — mesmo que implique uma boia paga.'},
+ {wp:'sunj', t:'banho', nome:'Šunj — Lopud', dia:'Dia 2 (banho/almoço)', horas:'Chegada 10:20 (D2) · Largada 15:00 (D2)', txt:'Praia de areia; fundear 4–6 m fora das boias de banhistas. Fundo rocha/ervas (Navily) — procurar mancha de areia e mergulhar a verificar o ferro. Aberta a SE.', navu:'https://www.navily.com/mouillage/uvala-sunj/16693', img:IMG+'cVW2ls1UWapm6IBMpGtq0VfipZuPwqqplBZdUo6kuwL5jitpLfsok6IzgfUN3rya?w=600',
+  pq:'Uma das raríssimas praias de AREIA do Adriático sul ("Caraíbas do Adriático") — o melhor banho das Elafiti, a 20 min da noite anterior. Fundeio grátis fora da zona de banhistas.'},
+ {wp:'sipluka', t:'noite', nome:'Šipanska Luka — Šipan', dia:'Noite 2', horas:'Chegada 15:55 (D2) · Largada 08:30 (D3)', txt:'Fundear ao fundo da baía (W), areia/rocha/ervas 4–8 m. Campo de 5 boias guest (sazonal, máx. 20 m) como opção rápida. Água disponível no cais. Dinghy a terra (2 viagens).', navu:'https://www.navily.com/mouillage/luka-sipanska/16557', img:IMG+'0DlWzZQVDOegAr1h8nHQHKjW08ixP1p2EFj9IZonq89lYTiiy6lMxz3TpmbhlZTR?w=600',
+  pq:'Baía profunda e abrigada com aldeia autêntica para esticar as pernas, sem obrigação de restaurante (ancora-se livre ao fundo). E posiciona o barco no extremo NW das Elafiti, encurtando a travessia longa do dia seguinte para Mljet.'},
+ {wp:'okuklje', t:'banho', nome:'Okuklje — Mljet (opcional)', dia:'Dia 3 (só se adiantados)', horas:'Paragem opcional a meio da pernada — sem horário fixo', txt:'Paragem de banho opcional a meio da pernada mais longa.', navu:'https://www.navily.com/carte?q=Okuklje%20Mljet', wiki:'Mljet',
+  pq:'Único abrigo conveniente a meio das 23 nm do Dia 3 — serve de paragem de banho se estiverem adiantados ou de refúgio se o maestral entrar cedo.'},
+ {wp:'polace', t:'noite', nome:'Polače — Mljet (PN)', dia:'Noite 3', horas:'Chegada 11:50 (D3) · Largada 08:30 (D4)', txt:'Melhor abrigo da semana (360°). Fundo areia/ervas/lama 10–15 m (Navily); possível linha a terra. Água e cais acessíveis por dinghy. Rangers cobram PN (~60–100 € barco + bilhetes ×8). Lagos às 14:00.', navu:'https://www.navily.com/mouillage/luka-polace/14612', img:IMG+'2KLTe20yHrMftt0dThfH76p8CqGmatZJfiGBNAmC5tHBZT0jFG45VS6u1KuLo0GQ?w=600',
+  pq:'O melhor abrigo natural de toda a rota (protegido de TODOS os quadrantes — noite descansada garantida) e a porta de entrada do Parque Nacional: paga-se o bilhete de qualquer forma por estar nas águas do parque, e ele já inclui lagos + autocarro. Ancoragem em si é grátis.'},
+ {wp:'saplun', t:'banho', nome:'Saplun — Lastovnjaci', dia:'Dia 4 (banho/almoço)', horas:'Chegada 11:15 (D4) · Largada 15:00 (D4)', txt:'Praia deserta, fundo areia/rocha/ervas 4–8 m (Navily), água turquesa. Só com bom tempo — sem abrigo nem serviços. Vigiar rocas.', navu:'https://www.navily.com/mouillage/saplun-beach/44131', img:IMG+'MqjBrHOTDYzsMb0qlRPNvsKcxSQRJM8immEZRRJFQZe7RL4cUuoEVXPcdSxOe2w8?w=600',
+  pq:'Ilhéus desertos com fundo de areia e água turquesa — o banho mais "postal" da semana. Ficam exatamente a caminho de Lastovo, partindo a travessia de 28 nm em 19+9.'},
+ {wp:'malilago', t:'noite', nome:'Mali Lago / Pasadur — Lastovo (Parque Natural)', dia:'Noite 4', horas:'Chegada 16:20 (D4) · Largada 08:30 (D5)', txt:'⚠ Navily: em Pasadur o fundeio é PROIBIDO — campo de 15 boias (tel. +385 91 931 5746). Mais para dentro (Malo Lago) fundeio permitido mas fundo de ROCHA — testar bem a tença ou apanhar boia. Entrada pelo canal N (zigue-zague, baixios). NÃO passar a ponte de Pasadur. Konoba/snack e cais por dinghy. Taxa PN ~30–40 €.', navu:'https://www.navily.com/mouillage/pasadur-lastovo/44741', img:IMG+'ENoLdURqNgU9XnrXCdA3gz6CpHYfcrCRSlrBjOKPX8XKxE2zt3BvxqsqsyukP0Ks?w=600',
+  pq:'Escolhido POR EXCLUSÃO: Zaklopatica = boias de restaurantes que "obrigam" a jantar; Skrivena Luka = boias pagas. Mali Lago é recolhido, com abrigo total em qualquer vento — e Lastovo tem o céu mais escuro da Croácia. Com fundo de rocha, a boia do campo de Pasadur é dinheiro bem gasto.'},
+ {wp:'pupnatska', t:'banho', nome:'Pupnatska Luka — Korčula S', dia:'Dia 5 (banho/almoço)', horas:'Chegada 10:20 (D5) · Largada 13:30 (D5)', txt:'Enseada de calhau; 2 m (N) a 30 m (S), areia que segura bem (rocha junto à costa). Konoba e bar na praia no verão. Aberta a S — só com maestral/norte.', navu:'https://www.navily.com/carte?q=Pupnatska%20Luka', wiki:'Pupnat',
+  pq:'Acrescentado ao plano original para partir as horas de motor seguidas em duas pernadas com o melhor banho da costa sul de Korčula pelo meio. Protegida do maestral (vento dominante à tarde).'},
+ {wp:'badija', t:'banho', nome:'Badija', dia:'Dia 5 (tarde)', horas:'Chegada 15:10 (D5) · Largada 16:30 (D5)', txt:'Fundear a S/W do mosteiro, 5–8 m, areia/rocha (Navily) — boa tença. Veados que comem à mão; praia e snack.', navu:'https://www.navily.com/mouillage/badija/17475', img:IMG+'YgILIe60gutdL8dWPTPRXp1kmBV0cuUM71SEAUNT1t3w7m83x4JINHA9jvvPieTJ?w=600',
+  pq:'Paragem cultural e diferente (mosteiro franciscano do séc. XIV + veados mansos) mesmo à porta de Korčula — e, segundo o Navily, a alternativa clássica quando Korčula está cheia. Gere o timing de entrada na marina.'},
+ {wp:'acikorc', t:'marina', nome:'ACI Marina Korčula', dia:'Noite 5', horas:'Chegada 16:45 (D5) · Largada 09:30 (D6)', txt:'RESERVAR (julho!) — código mySea NAGA-JULI8. Chegar antes das 17h. Mooring lines + popa ao cais; eletricidade, água, duches, WiFi (Navily). Encher 660 l de água + shore power (70 A) + reabastecer água potável e frescos. ~120 €+.', navu:'https://www.navily.com/port/aci-marina-korcula/1396', img:IMG+'I4g38vdlJyW8o5bnob8xkPDMmQjlDOd1THkGAjQLWfuaSnVMPo6pYdrkIDggo1Wc?w=600',
+  pq:'A ÚNICA noite de marina, de propósito no meio da semana: com 8 pessoas e 660 l de água / 2 baterias sem solar, é aqui que se repõe tudo (água, energia, duches, roupa, água potável e frescos). Bónus: cidade medieval a pé do pontão. Plano B grátis: fundear em Uvala Luka.'},
+ {wp:'zuljana', t:'banho', nome:'Žuljana — Pelješac', dia:'Dia 6 (banho/almoço)', horas:'Chegada 11:40 (D6) · Largada 15:00 (D6)', txt:'Fundo areia/ervas (Navily), boa tença. Praia, snack e cais por dinghy. Virada a W — ondulação do maestral à tarde: sair até às 15:00.', navu:'https://www.navily.com/mouillage/zuljana/29359', img:IMG+'W6MZKvDSoCp3lNTqa9Zq67W2Wl1B9UXwgXxOnXI3djFuoUVsVpUyC5UmE2zdmfds?w=600',
+  pq:'A baía mais bonita do lado W de Pelješac e a paragem natural de almoço a meio das 30 nm do Dia 6. Virada a W, não serve para dormir com maestral — daí ser só banho/almoço com saída até às 15h.'},
+ {wp:'marculeti', t:'noite', nome:'Marčuleti — Pelješac (canal de Ston)', dia:'Noite 6', horas:'Chegada 17:10 (D6) · Largada 09:30 (D7)', txt:'Enseada selvagem, não catalogada no Navily — sondar bem: o fundo cai para 20 m; fundear em patamar de 8–12 m e filar 5:1. Plano B: Kobaš — no cais público o fundeio é proibido (Navily); Gastro Mare tem cais próprio (implica jantar).', navu:'https://www.navily.com/mouillage/kobas/31044', img:IMG+'HLeEbK5MMX4HXKxwM1w629k6VznvXeugWFXdVBZNBajQOJzqx928k4Dd4WeBa4NL?w=600',
+  pq:'A vizinha Kobaš vive dos restaurantes (cais público sem fundeio); Marčuleti é a alternativa selvagem e grátis mesmo ao lado, abrigada no canal de Ston. E deixa o Dia 7 curto e descansado (~18,5 nm até à base).'},
+ {wp:'jakljan', t:'banho', nome:'Uvala Veliki Jakljan', dia:'Dia 7 (banho/almoço)', horas:'Chegada 10:00 (D7) · Largada 13:30 (D7)', txt:'Fundeio permitido, fundo areia/ervas 5–10 m (Navily) — garantir que a âncora pega na areia. Praia; sem serviços. Alternativa: Olipa.', navu:'https://www.navily.com/mouillage/uvala-veliki-jakljan/17894', img:IMG+'0zVcryohAXsYeO787cGQzRSBI3jhzzanUbiEWjaRtXfHUk2mSWfMtCuOQbCuYtPK?w=600',
+  pq:'Última "piscina natural" desabitada da viagem, mesmo a caminho da base — mergulhos de despedida sem desvio, deixando menos de 2 h até ao combustível em Gruž.'},
+ {wp:'gruz', t:'fuel', nome:'Posto de combustível — Gruž', dia:'Dia 7, ~15:30', horas:'Chegada 15:25 (D7) · Largada 16:15 (D7)', txt:'Devolver cheio (400 l; esperar ~150–180 l a 7 nós). Fila de 30–60 min em julho. Guardar recibo.', navu:'https://www.navily.com/carte?q=Gru%C5%BE', wiki:'Gru%C5%BE',
+  pq:'Único posto de combustível prático antes da devolução na ACI Dubrovnik — paragem obrigatória, planeada cedo por causa das filas de julho.'}
+];
+
+// ---------- Marcas de 30 min ao longo da rota (traço perpendicular, a 7 nós) ----------
+const SPEED_KN = 7;
+const MARK_INTERVAL_M = SPEED_KN * 1852 * 0.5; // metros percorridos em 30 min
+function addTimeTicks(latlngs, color, grp){
+  const segs = [];
+  let total = 0;
+  for(let i=0;i<latlngs.length-1;i++){
+    const a = L.latLng(latlngs[i]), b = L.latLng(latlngs[i+1]);
+    const d = a.distanceTo(b);
+    segs.push({a,b,d});
+    total += d;
+  }
+  let mark = MARK_INTERVAL_M, acc = 0, n = 0;
+  for(const s of segs){
+    while(mark <= acc + s.d){
+      n++;
+      const t = (mark - acc) / s.d;
+      const lat = s.a.lat + (s.b.lat - s.a.lat) * t;
+      const lng = s.a.lng + (s.b.lng - s.a.lng) * t;
+      const brng = Math.atan2((s.b.lng - s.a.lng) * Math.cos(lat*Math.PI/180), s.b.lat - s.a.lat);
+      const perp = brng + Math.PI/2;
+      const halfM = 250; // metade do comprimento do traço (m)
+      const dLat = (halfM * Math.cos(perp)) / 111320;
+      const dLng = (halfM * Math.sin(perp)) / (111320 * Math.cos(lat*Math.PI/180));
+      L.polyline([[lat-dLat, lng-dLng],[lat+dLat, lng+dLng]], {color, weight:2.5, opacity:.9})
+        .bindTooltip(`${(n*30/60).toFixed(1)} h`, {permanent:false, direction:'top'})
+        .addTo(grp);
+      mark += MARK_INTERVAL_M;
+    }
+    acc += s.d;
+  }
+  return total; // metros
+}
+
+// ---------- Desenhar rotas (uma camada por dia) ----------
+const overlays = {};
+legs.forEach(l=>{
+  const latlngs = l.pts.map(k=>WP[k]);
+  const grp = L.layerGroup();
+  L.polyline(latlngs, {color:'#fff', weight:6, opacity:.6}).addTo(grp);
+  const line = L.polyline(latlngs, {color:C[l.d], weight:3.5, opacity:.95}).addTo(grp);
+  const totalM = addTimeTicks(latlngs, C[l.d], grp);
+  const totalNm = totalM / 1852;
+  const totalH = totalNm / SPEED_KN;
+  line.bindPopup(`<div class="popup"><h3>${l.nome}</h3><p>${l.info}</p><p><b>Total a navegar:</b> ${totalH.toFixed(1)} h (${totalNm.toFixed(1)} nm a ${SPEED_KN} nós)</p></div>`);
+  line.bindTooltip(`D${l.d}`, {permanent:false, sticky:true, className:'daylab'});
+  grp.addTo(map);
+  overlays[`<span class="sw" style="background:${C[l.d]}"></span>${l.nome}`] = grp;
+});
+
+// ---------- Marcadores (foto Navily → fallback Wikipédia + justificação) ----------
+function popupHTML(p, lat, lon, img){
+  const t = TIPO[p.t];
+  const credit = p.img ? ' <span style="color:#999">(foto: Navily)</span>' : '';
+  return `<div class="popup" style="max-width:280px">
+    ${img?`<img src="${img}" alt="${p.nome}" style="width:100%;max-height:160px;object-fit:cover;border-radius:6px;margin-bottom:6px">`:''}
+    <h3>${p.nome}</h3>
+    <span class="tag" style="background:${t.cor}">${t.rot} · ${p.dia}</span>
+    ${p.horas?`<p style="font-weight:600;color:#1d3557">🕐 ${p.horas}</p>`:''}
+    <p>${p.txt}</p>
+    <p style="background:#f2f7f2;border-left:3px solid #588157;padding:5px 8px;border-radius:0 4px 4px 0"><b>Porquê este ponto:</b> ${p.pq}</p>
+    <p>${lat.toFixed(4)}°N ${lon.toFixed(4)}°E · <a href="${p.navu}" target="_blank">Navily ▸ ficha completa</a> · <a href="https://www.google.com/maps?q=${lat},${lon}" target="_blank">Google Maps</a>${credit}</p></div>`;
+}
+const grpPts = L.layerGroup().addTo(map);
+pontos.forEach(p=>{
+  const [lat,lon] = WP[p.wp];
+  const t = TIPO[p.t];
+  const m = L.circleMarker([lat,lon], {radius:8, color:'#fff', weight:2, fillColor:t.cor, fillOpacity:1})
+   .bindPopup(popupHTML(p, lat, lon, p.img || null), {maxWidth:300})
+   .bindTooltip(`<b>${p.nome.split('—')[0].trim()}</b>${p.horas?`<br>${p.horas}`:''}`, {direction:'top', offset:[0,-6]})
+   .addTo(grpPts);
+  // Sem foto Navily → tentar Wikipédia (REST summary API); silencioso se falhar
+  if(!p.img && p.wiki){
+    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${p.wiki}`)
+      .then(r=>r.ok?r.json():null)
+      .then(j=>{ if(j && j.thumbnail && j.thumbnail.source){
+          m.setPopupContent(popupHTML(p, lat, lon, j.thumbnail.source.replace(/\/(\d+)px-/, '/480px-')));
+      }}).catch(()=>{});
+  }
+});
+overlays['<b>Pontos de paragem</b>'] = grpPts;
+
+L.control.layers({'Mapa':osm}, overlays, {collapsed:true, position:'topright'}).addTo(map);
+
+// ---------- Título e legenda ----------
+const title = L.control({position:'topleft'});
+title.onAdd = ()=>{ const d=L.DomUtil.create('div','titlebox');
+  d.innerHTML = `<h1>⛵ Plano de Bordo — "Julija" (Bali Catsmart)</h1>
+  <p><b>18–25 Jul 2026</b> · 8 pessoas · ~144 nm · ~21 h motor a 7 nós</p>
+  <p>Dubrovnik → Elafiti → Mljet → Lastovo → Korčula → Pelješac → Dubrovnik</p>
+  <p style="color:#888">Clica nas linhas e nos pontos. Coordenadas aproximadas — confirmar na carta.</p>`;
+  return d; };
+title.addTo(map);
+
+const leg = L.control({position:'bottomleft'});
+leg.onAdd = ()=>{ const d=L.DomUtil.create('div','legend');
+  let h = '<b>Rotas</b><br>';
+  legs.forEach(l=>h+=`<span class="sw" style="background:${C[l.d]}"></span>Dia ${l.d}<br>`);
+  h += '<b>Pontos</b><br>';
+  Object.values(TIPO).forEach(t=>h+=`<span class="dot" style="background:${t.cor}"></span>${t.rot}<br>`);
+  d.innerHTML = h; return d; };
+leg.addTo(map);
+
+map.fitBounds(L.latLngBounds(Object.values(WP)).pad(0.06));
+</script>
+</body>
+</html>
