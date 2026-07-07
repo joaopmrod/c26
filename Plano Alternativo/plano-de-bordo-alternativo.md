@@ -58,6 +58,23 @@ Distâncias = soma de segmentos retos entre os **waypoints do mapa** (contornam 
 
 **Dias com mais milhas:** D5 (34,5 nm) e D6 (33,5 nm) — ambos com o grosso feito de manhã. **Pernada mais longa seguida:** D6 Badija → Saplunara (32 nm, ~4h15) — com maestral é vela de popa, não motor.
 
+## 2b. Tempo livre por dia — para não fazer nada e ver as ilhas
+
+Contas honestas: "livre" = janela **08:00–20:30**, descontando navegação, manobras e logística (compras, check-in, treino, reposição, gasóleo). Depois das 20:30 a noite é sempre livre (jantar, estrelas, konoba). Pequeno-almoço em andamento não conta como tempo perdido.
+
+| Dia | A navegar | **Livre** | Onde se gasta |
+|---|---|---|---|
+| D1 | ~2h35 | **~3h** | ~1h em Dubrovnik entre compras e check-in + fim de tarde em Šipanska Luka (o treino de fundeio, 1h15, conta como trabalho) |
+| D2 | ~3h | **~8h30** | PN Mljet a tarde toda (lagos, Sta. Maria, bicicletas) |
+| D3 | ~3h25 | **~8h30** | ~4h Saplun (praia deserta) · 4h40 Skrivena Luka + caminhada ao farol de Struga |
+| D4 | ~3h25 | **~8h30** | 3h40 Proizd (a praia n.º 1) · ~5h Gradina/salto a Vela Luka |
+| D5 | ~4h35 | **~6h30** | 2h35 Pupnatska · ~4h cidade de Korčula (1h de reposição à parte) — compensa com a noite na cidade |
+| D6 | ~4h25 | **~7h35** | 1h Badija (veados) · **6h35 de praia em Saplunara** |
+| D7 | ~2h50 + gasóleo | **~8h30** | 1h manhã · 3h praia de Šunj · 4h35 marina/piscina/última ida à cidade |
+
+**Total livre: ~51 h.** O D1 é o único dia "apertado" — de propósito: é o preço do shakedown. Do D2 em diante, média de ~8h livres/dia.
+
+
 ## 3. Porquê cada ponto
 
 | Ponto | Papel | Porquê |
@@ -137,6 +154,8 @@ Distâncias = soma de segmentos retos entre os **waypoints do mapa** (contornam 
 > [!abstract] Resumo
 > Veados em Badija ao pequeno-almoço e depois o grande bordo de popa da semana: Pelješki kanal abaixo com o maestral atrás, almoço em andamento, e tarde inteira na baía de areia de Saplunara.
 
+- > [!tip] Mais tempo em Korčula? Rouba a manhã do D6
+  > A cidade vê-se bem em 2–3 h e a noite do D5 é a melhor altura (fresca, iluminada, sem cruzeiros). Se souber a pouco: mercado e catedral abrem ~09:00 — ficar na cidade até às **11:00** e largar então (chegada a Saplunara ~15:30). Custa a Badija (veados) e ~1h30 de praia; o D6 é o dia que melhor absorve o atraso.
 - **08:30** saída da marina · **08:40–09:40 Badija**: fundear S/W do mosteiro 5–8 m; veados + mosteiro.
 - **09:40** largada SE (125°). Com maestral estabelecido a partir do meio-dia: **solent + grande, vela de popa/alheta** — o melhor dia de vela. Almoço em andamento (~12:30).
 - **13:55 Saplunara**: entrar pela ponta SE de Mljet; boia dos restaurantes (jantar = boia) ou fundear na **areia** ~300 m a S das boias, 4–8 m.

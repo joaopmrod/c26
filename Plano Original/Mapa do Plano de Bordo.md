@@ -2,14 +2,14 @@
 title: Mapa do Plano de Bordo
 tags: [vela, croácia, mapa]
 ---
-
+[]()
 # Mapa interativo — Sailing Week 18–25 Jul 2026
 
 O bloco abaixo embebe `mapa-plano-de-bordo.html` dentro do Obsidian. Requer o plugin comunitário **Local HTML Embed** (Definições → Community plugins → procurar "Local HTML Embed" → instalar e ativar). O mapa precisa de internet (tiles OSM/OpenSeaMap + fotos Navily).
 
 ```html-embed
-path: Plano Original/mapa-plano-de-bordo.html
-height: 640
+Plano Original/mapa-plano-de-bordo.html
+640
 ```
 
 Se o bloco acima aparecer como código, o plugin ainda não está ativo. Alternativas:

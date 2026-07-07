@@ -37,6 +37,7 @@ Tudo o resto (o barco, a marina de meio de semana em Korčula à quarta, as regr
 | Pernada mais longa | 23 nm seguidos (D3) | 32 nm seguidos (D6 — vela de popa com maestral) |
 | Noites de marina | 1 (ACI Korčula, qua) | 1 (ACI Korčula, qua) |
 | Ilha mais a oeste | Korčula (cidade / Pupnatska) | **Proizd / Vela Luka** (ponta W de Korčula) |
+| **Tempo livre acumulado** (08:00–20:30, sem navegação/logística) | **~57 h** | ~51 h (shakedown) · ~52 h (V1 e 17h) |
 
 O alternativo é ~36 nm mais longo. Esse é literalmente "o preço da ponta oeste de Korčula, pago em gasóleo que decidimos gastar".
 

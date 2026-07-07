@@ -46,25 +46,42 @@ Documento operacional de navegação. Complementa [[plano]] (roteiro geral), [[p
 
 Distâncias por rota costeira realista (não em linha reta). ETAs a 7 nós, já com pequena folga.
 
-| Dia | Pernada | Dist. | Rumo geral | ETD | ETA |
-|---|---|---|---|---|---|
-| 1 · Sáb 18 | ACI Dubrovnik → Donje Čelo (Koločep) | 7,5 nm | W (285°) | 18:30 | ~19:35 |
-| 2 · Dom 19 | Koločep → Šunj (Lopud) | 2,5 nm | W | 10:00 | 10:20 |
-| 2 | Šunj → Šipanska Luka (Šipan) | **11,5 nm** | NW | 15:00 | 16:40 |
-| 3 · Seg 20 | Šipanska Luka → Polače (Mljet) | **23 nm** | W (280°) | **08:30** | 11:50 |
-| 4 · Ter 21 | Polače → Saplun (Lastovnjaci) | 19 nm | WSW (261°) | 08:30 | 11:15 |
-| 4 | Saplun → Mali Lago (Lastovo) | 9 nm | W (280°) | 15:00 | 16:20 |
-| 5 · Qua 22 | Mali Lago → Pupnatska Luka (Korčula S) | 13 nm | NE (046°) | 08:30 | 10:20 |
-| 5 | Pupnatska → Badija | 11,5 nm | ENE (067°) | 13:30 | 15:10 |
-| 5 | Badija → ACI Marina Korčula | 1,5 nm | WNW | 16:30 | 16:45 |
-| 6 · Qui 23 | Korčula → Žuljana (Pelješac) | 15 nm | ESE (107°) | 09:30 | 11:40 |
-| 6 | Žuljana → Marčuleti / Kobaš | 15 nm | SE (117°) | 15:00 | 17:10 |
-| 7 · Sex 24 | Marčuleti → Jakljan (banhos) | 3,5 nm | SE | 09:30 | 10:00 |
-| 7 | Jakljan → Gruž (combustível) | 13 nm | ESE (111°) | 13:30 | 15:25 |
-| 7 | Gruž → ACI Dubrovnik | 2 nm | ENE | 16:15 | 16:30 |
-| 8 · Sáb 25 | Check-out | — | — | — | 08:30 |
+| Dia        | Pernada                                | Dist.       | Rumo geral | ETD       | ETA    |
+| ---------- | -------------------------------------- | ----------- | ---------- | --------- | ------ |
+| 1 · Sáb 18 | ACI Dubrovnik → Donje Čelo (Koločep)   | 7,5 nm      | W (285°)   | 18:30     | ~19:35 |
+| 2 · Dom 19 | Koločep → Šunj (Lopud)                 | 2,5 nm      | W          | 10:00     | 10:20  |
+| 2          | Šunj → Šipanska Luka (Šipan)           | **11,5 nm** | NW         | 15:00     | 16:40  |
+| 3 · Seg 20 | Šipanska Luka → Polače (Mljet)         | **23 nm**   | W (280°)   | **08:30** | 11:50  |
+| 4 · Ter 21 | Polače → Saplun (Lastovnjaci)          | 19 nm       | WSW (261°) | 08:30     | 11:15  |
+| 4          | Saplun → Mali Lago (Lastovo)           | 9 nm        | W (280°)   | 15:00     | 16:20  |
+| 5 · Qua 22 | Mali Lago → Pupnatska Luka (Korčula S) | 13 nm       | NE (046°)  | 08:30     | 10:20  |
+| 5          | Pupnatska → Badija                     | 11,5 nm     | ENE (067°) | 13:30     | 15:10  |
+| 5          | Badija → ACI Marina Korčula            | 1,5 nm      | WNW        | 16:30     | 16:45  |
+| 6 · Qui 23 | Korčula → Žuljana (Pelješac)           | 15 nm       | ESE (107°) | 09:30     | 11:40  |
+| 6          | Žuljana → Marčuleti / Kobaš            | 15 nm       | SE (117°)  | 15:00     | 17:10  |
+| 7 · Sex 24 | Marčuleti → Jakljan (banhos)           | 3,5 nm      | SE         | 09:30     | 10:00  |
+| 7          | Jakljan → Gruž (combustível)           | 13 nm       | ESE (111°) | 13:30     | 15:25  |
+| 7          | Gruž → ACI Dubrovnik                   | 2 nm        | ENE        | 16:15     | 16:30  |
+| 8 · Sáb 25 | Check-out                              | —           | —          | —         | 08:30  |
 
 **Dia mais longo:** Dia 3 (23 nm seguidas, ~3h20). **Dias com mais milhas:** Dia 6 (30 nm) e Dia 4 (28 nm), ambos partidos em duas pernadas com almoço/banhos pelo meio.
+
+## 2b. Tempo livre por dia — para não fazer nada e ver as ilhas
+
+Contas honestas: "livre" = janela **08:00–20:30**, descontando navegação, manobras e logística (compras, check-in, treino, reposição, gasóleo). Depois das 20:30 a noite é sempre livre (jantar, estrelas, konoba). Pequeno-almoço em andamento não conta como tempo perdido.
+
+| Dia | A navegar | **Livre** | Onde se gasta |
+|---|---|---|---|
+| D1 | ~1h | **~5h** | Tarde em Dubrovnik (pós-compras) + 1h na baía de Koločep |
+| D2 | ~2h | **~10h30** | 2h Koločep de manhã · 4h40 praia de Šunj · 3h50 Šipanska Luka — o dia mais folgado da semana |
+| D3 | ~3h20 | **~8h30** | Tarde e fim de tarde inteiros no PN Mljet (lagos, Sta. Maria, bicicletas) |
+| D4 | ~4h05 | **~8h** | 3h45 Saplun (praia deserta) · 4h10 Mali Lago (dinghy, Pasadur) |
+| D5 | ~4h | **~8h15** | 3h10 Pupnatska · 1h20 Badija (veados) · 3h45 cidade de Korčula (+ noite na cidade) |
+| D6 | ~4h20 | **~8h10** | 1h30 manhã calma · 3h20 Žuljana (praia) · 3h20 Marčuleti (enseada selvagem) |
+| D7 | ~4h (c/ gasóleo) | **~9h** | 1h30 manhã · 3h30 Jakljan (piscina natural) · 4h piscina da marina/cidade velha |
+
+**Total livre: ~57 h** — é o plano mais folgado dos quatro (menos milhas, ritmo de 7 nós).
+
 
 ## 3. Porquê cada fundeadouro — lógica das escolhas
 
@@ -181,6 +198,7 @@ Critério geral: **ancoradouros livres para dormir** (custo ~€0 e independênc
 > [!abstract] Resumo do dia
 > O melhor dia de vela: maestral de popa pelo canal de Pelješac, almoço e banho na baía dourada de Žuljana e noite selvagem, sem uma única luz, na enseada de Marčuleti no canal de Ston.
 
+- > [!tip] Mais tempo em Korčula? A cidade vê-se em 2–3 h e a noite do D5 é a melhor altura. Se souber a pouco: mercado/catedral abrem ~09:00 — pode largar-se às 11:00 em vez das 09:30 (chegada a Marčuleti ~18:40, no limite das 19:00; nesse caso encurtar Žuljana).
 - **09:30** largada para ESE (107°). Com maestral estabelecido, vento de popa/alheta — **velejar**: solent rende logo; para a grande (square top), winch elétrico e abrir cedo com pouco vento.
 - **11:40 Žuljana** ([Navily ▸](https://www.navily.com/mouillage/zuljana/29359) · [Google Maps](https://www.google.com/maps?q=42.892,17.453), ≈42.892°N 17.453°E). Fundo areia/ervas, boa tença. Praia + snack por dinghy.
 
