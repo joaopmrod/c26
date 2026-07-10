@@ -312,6 +312,50 @@ function addTimeTicks(latlngs, color, grp, speedKn){
   return total;
 }
 
+// ---------- Vento previsto por dia (consulta 10 Jul · Open-Meteo + Windguru ECMWF/GFS) ----------
+// from = direção DE ONDE sopra (graus); a seta desenha-se a apontar PARA ONDE sopra.
+// frac = posição da seta ao longo da pernada (0=início, 1=fim). from:null = calmaria (círculo).
+const WIND = {
+  1:[{frac:0.5,  from:135,  label:'Jugo SE 5–8 kn (raj. 20–25) · cai ao anoitecer', tone:'light'}],
+  2:[{frac:0.25, from:null, label:'manhã: calmaria', tone:'calm'},
+     {frac:0.75, from:270,  label:'tarde: W 5–7 kn', tone:'light'}],
+  3:[{frac:0.5,  from:225,  label:'0–6 kn · motor', tone:'calm'}],
+  4:[{frac:0.5,  from:112,  label:'ESE 8–10 kn (popa) ⚠ GFS diz NW — confirmar D-3', tone:'mod'}],
+  5:[{frac:0.35, from:112,  label:'manhã: ESE 7–10 kn', tone:'mod'},
+     {frac:0.85, from:315,  label:'fim de tarde: NW 12–16 (raj. 20–26)', tone:'strong'}],
+  6:[{frac:0.25, from:22,   label:'manhã: bora NNE raj. 25–30 · alivia 12h', tone:'strong'},
+     {frac:0.75, from:315,  label:'tarde: NW 6–12 kn', tone:'mod'}],
+  7:[{frac:0.3,  from:45,   label:'manhã: NE 2–5 kn', tone:'calm'},
+     {frac:0.75, from:225,  label:'tarde: SW 5–9 kn', tone:'light'}]
+};
+const WINDCOL = {calm:'#94a3b8', light:'#0ea5e9', mod:'#0d9488', strong:'#d97706'};
+
+function pointAtFrac(latlngs, frac){
+  const pts = latlngs.map(p=>L.latLng(p));
+  const segs = []; let total = 0;
+  for(let i=0;i<pts.length-1;i++){ const d = pts[i].distanceTo(pts[i+1]); segs.push({a:pts[i],b:pts[i+1],d}); total += d; }
+  let target = total*frac, acc = 0;
+  for(const s of segs){
+    if(target <= acc + s.d){ const t = (target-acc)/s.d;
+      return [s.a.lat+(s.b.lat-s.a.lat)*t, s.a.lng+(s.b.lng-s.a.lng)*t]; }
+    acc += s.d;
+  }
+  return [pts[pts.length-1].lat, pts[pts.length-1].lng];
+}
+
+function addWindArrows(latlngs, day, grp){
+  (WIND[day]||[]).forEach(w=>{
+    const pos = pointAtFrac(latlngs, w.frac);
+    const col = WINDCOL[w.tone];
+    const glyph = w.from==null
+      ? `<svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="none" stroke="${col}" stroke-width="3.5"/></svg>`
+      : `<svg width="20" height="20" viewBox="0 0 24 24" style="transform:rotate(${(w.from+180)%360}deg)"><path d="M12 2 L18 12 L13.6 10.6 L13.6 22 L10.4 22 L10.4 10.6 L6 12 Z" fill="${col}"/></svg>`;
+    const html = `<div style="display:flex;flex-direction:column;align-items:center;gap:1px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35));">
+      ${glyph}<span style="font-size:10px;font-weight:700;background:rgba(255,255,255,.93);padding:1px 6px;border-radius:9px;color:#334155;white-space:nowrap;">${w.label}</span></div>`;
+    L.marker(pos, {icon: L.divIcon({className:'windarrow', html, iconSize:[240,40], iconAnchor:[120,20]}), interactive:false, keyboard:false}).addTo(grp);
+  });
+}
+
 function popupHTML(p, lat, lon, img){
   const t = TIPO[p.t];
   const credit = p.img ? ' <span style="color:#999">(foto: Navily)</span>' : '';
@@ -335,8 +379,10 @@ function buildPlan(cfg){
     L.polyline(latlngs, {color:'#fff', weight:6, opacity:.6}).addTo(grp);
     const line = L.polyline(latlngs, {color:C[l.d], weight:3.5, opacity:.95}).addTo(grp);
     const totalM = addTimeTicks(latlngs, C[l.d], grp, cfg.speed);
+    addWindArrows(latlngs, l.d, grp);
     const totalNm = totalM / 1852, totalH = totalNm / cfg.speed;
-    line.bindPopup(`<div class="popup"><h3>${l.nome}</h3><p>${l.info}</p><p><b>Total a navegar:</b> ${totalH.toFixed(1)} h (${totalNm.toFixed(1)} nm a ${cfg.speed} nós)</p></div>`);
+    const wtxt = (WIND[l.d]||[]).map(w=>w.label).join(' · ');
+    line.bindPopup(`<div class="popup"><h3>${l.nome}</h3><p>${l.info}</p><p><b>Total a navegar:</b> ${totalH.toFixed(1)} h (${totalNm.toFixed(1)} nm a ${cfg.speed} nós)</p>${wtxt?`<p style="background:#eef6fb;border-left:3px solid #0a66c2;padding:5px 8px;border-radius:0 4px 4px 0"><b>🌬 Vento previsto:</b> ${wtxt}</p>`:''}</div>`);
     line.bindTooltip(`D${l.d}`, {permanent:false, sticky:true, className:'daylab'});
     items.push({key:`d${l.d}`, label:`Dia ${l.d}`, color:C[l.d], layer:grp});
   });
@@ -347,8 +393,10 @@ function buildPlan(cfg){
     L.polyline(pts, {color:'#fff', weight:6, opacity:.5}).addTo(grp);
     const line = L.polyline(pts, {color:C[6], weight:3, opacity:.95, dashArray:'8 8'}).addTo(grp);
     const totalM = addTimeTicks(pts, C[6], grp, cfg.speed);
+    addWindArrows(pts, 6, grp);
     const totalNm = totalM / 1852, totalH = totalNm / cfg.speed;
-    line.bindPopup(`<div class="popup"><h3>${cfg.variant.nome}</h3><p>${cfg.variant.info}</p><p><b>Total a navegar:</b> ${totalH.toFixed(1)} h (${totalNm.toFixed(1)} nm a ${cfg.speed} nós)</p></div>`);
+    const wtxtV = (WIND[6]||[]).map(w=>w.label).join(' · ');
+    line.bindPopup(`<div class="popup"><h3>${cfg.variant.nome}</h3><p>${cfg.variant.info}</p><p><b>Total a navegar:</b> ${totalH.toFixed(1)} h (${totalNm.toFixed(1)} nm a ${cfg.speed} nós)</p>${wtxtV?`<p style="background:#eef6fb;border-left:3px solid #0a66c2;padding:5px 8px;border-radius:0 4px 4px 0"><b>🌬 Vento previsto:</b> ${wtxtV}</p>`:''}</div>`);
     line.bindTooltip('variante', {sticky:true, className:'daylab'});
     items.push({key:'variant', label:'Variante D6', color:C[6], layer:grp, dashed:true});
   }
@@ -548,7 +596,8 @@ const title = L.control({position:'topleft'});
 title.onAdd = ()=>{ const d=L.DomUtil.create('div','titlebox');
   d.innerHTML = `<h1>⛵ Sailing Week Croácia — Todos os Planos</h1>
   <p><b>18–25 Jul 2026</b> · 8 pessoas · "Julija" (Bali Catsmart)</p>
-  <p style="color:#888">Ativa/desativa cada plano e cada dia no painel à direita. Clica nas linhas e nos pontos para detalhes.</p>`;
+  <p style="color:#888">Ativa/desativa cada plano e cada dia no painel à direita. Clica nas linhas e nos pontos para detalhes.</p>
+  <p style="color:#0a66c2">🌬 Setas = vento previsto por pernada (consulta 10 Jul, ECMWF/Windguru) — apontam para onde o vento sopra. Laranja = rajadas fortes. Círculo = calmaria.</p>`;
   return d; };
 title.addTo(map);
 
