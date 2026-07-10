@@ -329,6 +329,21 @@
                 </div>
             </div>
 
+            <!-- Briefing de Vento -->
+            <div class="mb-12 p-6 bg-sky-50/80 rounded-2xl border border-sky-100">
+                <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center gap-2"><i data-lucide="wind" class="w-4 h-4 text-sky-500"></i> Briefing de Vento — previsão consultada a 10 Jul</h3>
+                <p class="text-sm text-slate-600 mb-4">Padrão clássico de verão no Adriático: <strong>manhãs calmas</strong> e brisa térmica (maestral W/NW) a meio da tarde, a morrer ao pôr-do-sol. Duas exceções: <strong>Sáb 18</strong> (jugo de SE moderado à tarde, rajadas 20–25 kn, a cair à noite) e <strong>Qui 23</strong> (bora de NNE ao início da manhã, rajadas 25–30 kn, a aliviar ao meio-dia). O plano aproveita as manhãs calmas para um <strong>mergulho matinal relaxado</strong> e largadas a meio da manhã; nos dias longos (Ter e Qua) larga-se às 09:30 para chegar com boa luz. Confirmar diariamente no Windy — a mais de 7 dias a previsão ainda muda.</p>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs text-slate-600">
+                    <div class="bg-white rounded-xl p-3 border border-sky-100"><p class="font-bold text-slate-800 mb-1">Sáb 18</p><p>Jugo SE 5–8 kn à tarde (raj. 20–25), cai ao anoitecer. Largada às 18:30 já tranquila.</p></div>
+                    <div class="bg-white rounded-xl p-3 border border-sky-100"><p class="font-bold text-slate-800 mb-1">Dom 19</p><p>Manhã calma; maestral W 5–7 kn à tarde, roda a NW ao fim do dia.</p></div>
+                    <div class="bg-white rounded-xl p-3 border border-sky-100"><p class="font-bold text-slate-800 mb-1">Seg 20</p><p>O dia mais calmo da semana (0–6 kn). Mar espelhado, viagem a motor.</p></div>
+                    <div class="bg-white rounded-xl p-3 border border-sky-100"><p class="font-bold text-slate-800 mb-1">Ter 21</p><p>ESE constante 8–10 kn — de popa para Lastovo. Dia de velas!</p></div>
+                    <div class="bg-white rounded-xl p-3 border border-sky-100"><p class="font-bold text-slate-800 mb-1">Qua 22</p><p>ESE 7–10 kn de manhã; NW refresca à noite (raj. 20–26) — noite ideal para a marina.</p></div>
+                    <div class="bg-white rounded-xl p-3 border border-sky-100"><p class="font-bold text-slate-800 mb-1">Qui 23</p><p>Bora NNE de madrugada (raj. 25–30), alivia ao meio-dia; NW moderado à tarde.</p></div>
+                    <div class="bg-white rounded-xl p-3 border border-sky-100"><p class="font-bold text-slate-800 mb-1">Sex 24</p><p>Fraco: NE de manhã, brisa SW 5–9 kn à tarde, de través para Dubrovnik.</p></div>
+                </div>
+            </div>
+
             <!-- Dicas práticas (provisões e barco) -->
             <div class="mb-12 p-6 bg-slate-100/80 rounded-2xl border border-slate-200">
                 <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">Antes de zarpar</h3>
@@ -473,56 +488,60 @@
 
         // Data Management
         const itinerary = [
-            { day: 1, date: "Sábado, 18 Jul", title: "A Fuga para o Silêncio", route: "Dubrovnik → Koločep", time: "1h 15m", dist: "5.5 NM", highlight: "Churrasco sob as estrelas", details: "Embarque no Bali 'Julija'. Check-in e arrumação das provisões antes da largada. Fugimos da confusão para acordar já no paraíso.", sleep: "Ancoradouro Livre (Donje Čelo)", img: "https://pplx-res.cloudinary.com/image/upload/v1770921173/pplx_search_images/5ebbda768e2aadf1b1818966087608d8f1e195fd.jpg",
+            { day: 1, date: "Sábado, 18 Jul", title: "A Fuga para o Silêncio", route: "Dubrovnik → Koločep", time: "1h 15m", dist: "5.5 NM", highlight: "Churrasco sob as estrelas", wind: "Jugo SE 5–8 kn à tarde (raj. 20–25), a cair ao anoitecer", details: "Embarque no Bali 'Julija'. Check-in e arrumação das provisões antes da largada. O jugo de SE da tarde perde força ao fim do dia — largamos já com o mar a assentar, e Donje Čelo fica abrigada deste quadrante.", sleep: "Ancoradouro Livre (Donje Čelo)", img: "https://pplx-res.cloudinary.com/image/upload/v1770921173/pplx_search_images/5ebbda768e2aadf1b1818966087608d8f1e195fd.jpg",
                 moorings: [
                     { name: "Donje Čelo, Koločep", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/carte?q=Donje%20Čelo%20Koločep", lat: 42.6780, lng: 18.0048 }
                 ],
                 plan: [
                     { time: "17:00", text: "Check-in e arrumação rápida das provisões." },
-                    { time: "18:30", text: "Largada da ACI Marina Dubrovnik." },
+                    { time: "18:30", text: "Largada da ACI Marina Dubrovnik — o jugo da tarde já a cair, mar a assentar." },
                     { time: "—", text: "Navegação (1h 15m): Rumo à Ilha de Koločep (Baía Donje Čelo)." },
-                    { time: "19:45", text: "Ancorar em Donje Čelo. <strong>Ancoradouro Livre.</strong> Fundo de areia, boa tença." },
+                    { time: "19:45", text: "Ancorar em Donje Čelo — abrigada do SE. <strong>Ancoradouro Livre.</strong> Fundo de areia, boa tença." },
                     { time: "20:30", text: "Jantar a Bordo: Churrasco de boas-vindas sob as estrelas." }
                 ] },
-            { day: 2, date: "Domingo, 19 Jul", title: "O Caribe do Adriático", route: "Koločep → Lopud → Šipan", time: "2h 45m", dist: "11 NM", highlight: "Praia de Areia Šunj", details: "Manhã na rara praia de areia de Šunj. Tarde a navegar para a ilha histórica de Šipan.", sleep: "Ancoradouro Livre (Šipanska Luka)", img: "https://pplx-res.cloudinary.com/image/upload/v1770921173/pplx_search_images/02c97d30c9bbbf4058ea3af3daf626d6371670b6.jpg",
+            { day: 2, date: "Domingo, 19 Jul", title: "O Caribe do Adriático", route: "Koločep → Lopud → Šipan", time: "2h 45m", dist: "11 NM", highlight: "Praia de Areia Šunj", wind: "Manhã calma; maestral W 5–7 kn à tarde, roda a NW ao fim do dia", details: "Mergulho matinal na calmaria de Donje Čelo, fim de manhã e almoço na rara praia de areia de Šunj. Tarde a navegar para a ilha histórica de Šipan com o maestral fraco pela popa.", sleep: "Ancoradouro Livre (Šipanska Luka)", img: "https://pplx-res.cloudinary.com/image/upload/v1770921173/pplx_search_images/02c97d30c9bbbf4058ea3af3daf626d6371670b6.jpg",
                 moorings: [
                     { name: "Šunj, Lopud", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/carte?q=Šunj%20Lopud", lat: 42.6900, lng: 17.9550 },
                     { name: "Šipanska Luka, Šipan", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/carte?q=Šipanska%20Luka%20Šipan", lat: 42.7424, lng: 17.7869 }
                 ],
                 plan: [
-                    { time: "09:00", text: "Pequeno-almoço." },
-                    { time: "10:00", text: "Navegação (45 min) para Ilha de Lopud." },
-                    { time: "10:45", text: "Paragem na Praia Šunj. Uma das raras praias de areia. Ancore fora da zona de banhistas (grátis)." },
-                    { time: "13:00", text: "Almoço a Bordo em Šunj." },
-                    { time: "14:30", text: "Navegação (2h 00m) para Ilha de Šipan (Baía de Šipanska Luka)." },
-                    { time: "16:30", text: "Chegada a Šipanska Luka. <strong>Dica:</strong> Não vá ao cais nem às boias pagas. Fundo da baía (oeste) ou entrada norte — o fundo segura bem. Grátis se ancorar." },
+                    { time: "08:30", text: "Pequeno-almoço com a baía em calmaria total." },
+                    { time: "09:00", text: "Mergulho matinal relaxado em Donje Čelo — água como um espelho, sem uma aragem." },
+                    { time: "10:30", text: "Navegação (45 min) para Ilha de Lopud." },
+                    { time: "11:15", text: "Paragem na Praia Šunj. Uma das raras praias de areia. Ancore fora da zona de banhistas (grátis)." },
+                    { time: "13:30", text: "Almoço a Bordo em Šunj." },
+                    { time: "15:00", text: "Navegação (2h 00m) para Ilha de Šipan (Baía de Šipanska Luka) — maestral fraco de W pela popa." },
+                    { time: "17:00", text: "Chegada a Šipanska Luka. <strong>Dica:</strong> Não vá ao cais nem às boias pagas. Fundo da baía (oeste) ou entrada norte — o fundo segura bem e fica-se mais protegido do NW do fim da tarde. Grátis se ancorar." },
                     { time: "19:00", text: "Passeio de dinghy a terra para ver a vila." },
                     { time: "20:30", text: "Jantar a Bordo." }
                 ] },
-            { day: 3, date: "Segunda, 20 Jul", title: "Entrada no Parque Nacional (Mljet)", route: "Šipan → Polače (Mljet)", time: "2h 30m", dist: "14 NM", highlight: "Lagos Salgados & Santa Maria", details: "Entramos no parque nacional. A natureza aqui é bruta e verdejante. Visitamos os lagos salgados e o ilhéu de Santa Maria.", sleep: "Baía de Polače", img: "https://pplx-res.cloudinary.com/image/upload/v1770921179/pplx_search_images/6219fcbe6b46bb2b3b482055cb91ad8a2a5c54f4.jpg",
+            { day: 3, date: "Segunda, 20 Jul", title: "Entrada no Parque Nacional (Mljet)", route: "Šipan → Polače (Mljet)", time: "2h 30m", dist: "14 NM", highlight: "Lagos Salgados & Santa Maria", wind: "O dia mais calmo da semana: 0–6 kn, mar espelhado", details: "O dia mais calmo da semana — manhã de banhos e paddle em Šipanska Luka sem pressa, travessia a motor sobre mar espelhado. Entramos no parque nacional, onde a natureza é bruta e verdejante, e visitamos os lagos salgados e o ilhéu de Santa Maria.", sleep: "Baía de Polače", img: "https://pplx-res.cloudinary.com/image/upload/v1770921179/pplx_search_images/6219fcbe6b46bb2b3b482055cb91ad8a2a5c54f4.jpg",
                 moorings: [
                     { name: "Polače, Mljet", type: "Ancoradouro Livre (Parque Nacional)", navilyUrl: "https://www.navily.com/carte?q=Polače%20Mljet", lat: 42.7859, lng: 17.3785 }
                 ],
                 plan: [
-                    { time: "09:00", text: "Navegação (2h 30m) rumo a Polače (Mljet)." },
-                    { time: "11:30", text: "Chegada a Polače. <strong>Custo:</strong> Ancorar é grátis, mas há bilhete do Parque Nacional (os rangers vão ao barco). ~60€–100€ barco + bilhetes por pessoa. Inclui lagos e autocarro. Evite as boias dos restaurantes; ancore no meio da baía." },
-                    { time: "12:30", text: "Almoço a Bordo." },
-                    { time: "14:00", text: "Visita aos Lagos Salgados e Ilhéu de Santa Maria (incluído no bilhete)." },
+                    { time: "08:30", text: "Pequeno-almoço." },
+                    { time: "09:00", text: "Mergulho matinal e paddle na calmaria de Šipanska Luka — sem vento, sem pressa." },
+                    { time: "11:00", text: "Navegação (2h 30m) rumo a Polače (Mljet). Mar espelhado — viagem a motor." },
+                    { time: "13:30", text: "Chegada a Polače. <strong>Custo:</strong> Ancorar é grátis, mas há bilhete do Parque Nacional (os rangers vão ao barco). ~60€–100€ barco + bilhetes por pessoa. Inclui lagos e autocarro. Evite as boias dos restaurantes; ancore no meio da baía." },
+                    { time: "14:00", text: "Almoço a Bordo." },
+                    { time: "15:30", text: "Visita aos Lagos Salgados e Ilhéu de Santa Maria (incluído no bilhete) — ao fim da tarde o calor alivia e há menos gente." },
                     { time: "20:00", text: "Jantar a Bordo num dos sítios mais calmos do mundo." }
                 ] },
-            { day: 4, date: "Terça, 21 Jul", title: "Rumo a Lastovo (Nature Park)", route: "Mljet → Lastovnjaci → Mali Lago", time: "4h 30m", dist: "24 NM", highlight: "Ilhéus desertos & céu estrelado", details: "O dia mais longo de navegação rumo à ilha mais remota. Paragem nos ilhéus desertos Lastovnjaci; noite em Mali Lago, uma enseada estreita e selvagem no extremo norte da ilha, junto a Pasadur.", sleep: "Mali Lago (Pasadur)", img: "https://pplx-res.cloudinary.com/image/upload/v1770921180/pplx_search_images/f44d964f5ca9efd57297723b1b3dd6d92dbd237c.jpg",
+            { day: 4, date: "Terça, 21 Jul", title: "Rumo a Lastovo (Nature Park)", route: "Mljet → Lastovnjaci → Mali Lago", time: "4h 30m", dist: "24 NM", highlight: "Ilhéus desertos & céu estrelado", wind: "ESE constante 8–10 kn — de popa até Lastovo. Dia de velas!", details: "O dia mais longo de navegação rumo à ilha mais remota — e o melhor dia de vela da semana: ESE constante de popa durante toda a travessia. Paragem nos ilhéus desertos Lastovnjaci; noite em Mali Lago, uma enseada estreita e selvagem no extremo norte da ilha, junto a Pasadur, abrigada de todos os quadrantes.", sleep: "Mali Lago (Pasadur)", img: "https://pplx-res.cloudinary.com/image/upload/v1770921180/pplx_search_images/f44d964f5ca9efd57297723b1b3dd6d92dbd237c.jpg",
                 moorings: [
                     { name: "Lastovnjaci", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/carte?q=Lastovnjaci", lat: 42.7167, lng: 16.9500 },
                     { name: "Mali Lago, Lastovo", type: "Ancoradouro Livre (zona norte)", navilyUrl: "https://www.navily.com/carte?q=Mali%20Lago%20Lastovo", lat: 42.7680, lng: 16.8254 }
                 ],
                 plan: [
-                    { time: "08:30", text: "Navegação (3h 30m) para Lastovo." },
-                    { time: "12:00", text: "Chegada aos Ilhéus Lastovnjaci (a leste de Lastovo). Ancorar no meio dos ilhéus desertos para banhos — água turquesa surreal." },
-                    { time: "13:00", text: "Almoço a Bordo." },
-                    { time: "15:00", text: "Navegação (1h 00m) para Mali Lago, no extremo norte da ilha (canal estreito em zigue-zague à entrada, atenção aos baixios). <strong>Porquê aqui?</strong> Zaklopatica tem restaurantes a \"obrigar\" a jantar; Skrivena Luka está cheia de boias pagas. Mali Lago é mais selvagem e recolhido — água turquesa, vegetação quase tropical e abrigo excelente em qualquer condição. Grátis. Alternativa: Zaklopatica ou Skrivena Luka na zona livre se houver espaço." },
+                    { time: "08:00", text: "Mergulho rápido ao acordar nas águas de Polače + pequeno-almoço reforçado." },
+                    { time: "09:30", text: "Navegação (3h 30m) para Lastovo — ESE 8–10 kn de popa: içar velas para a travessia mais longa da semana." },
+                    { time: "13:00", text: "Chegada aos Ilhéus Lastovnjaci (a leste de Lastovo). Ancorar no meio dos ilhéus desertos para banhos — água turquesa surreal." },
+                    { time: "13:45", text: "Almoço a Bordo." },
+                    { time: "16:00", text: "Navegação (1h 00m) para Mali Lago, no extremo norte da ilha (canal estreito em zigue-zague à entrada, atenção aos baixios). <strong>Porquê aqui?</strong> Zaklopatica tem restaurantes a \"obrigar\" a jantar; Skrivena Luka está cheia de boias pagas. Mali Lago é mais selvagem e recolhido — água turquesa, vegetação quase tropical e abrigo excelente em qualquer condição. Grátis. Alternativa: Zaklopatica ou Skrivena Luka na zona livre se houver espaço." },
                     { time: "20:00", text: "Jantar a Bordo. Ver o céu estrelado — Lastovo é o local mais escuro da Croácia." }
                 ] },
-            { day: 5, date: "Quarta, 22 Jul", title: "A Ponta de Korčula", route: "Lastovo → Badija → Korčula", time: "3h 45m + 20m", dist: "18 NM", highlight: "Veados em Badija & noite de conforto na marina", details: "Almoço com veados selvagens que vêm à mão em Badija. Visita à cidade medieval de Korčula; noite na ACI Marina Korčula — a única do roteiro — para recarregar baterias, encher os depósitos de água e desfrutar de um duche quente demorado antes de jantar na cidade murada, mesmo à porta do barco.", sleep: "ACI Marina Korčula", img: "https://pplx-res.cloudinary.com/image/upload/v1770921179/pplx_search_images/08558b2377e0f2f0ac33c617655df5bb8860186e.jpg",
+            { day: 5, date: "Quarta, 22 Jul", title: "A Ponta de Korčula", route: "Lastovo → Badija → Korčula", time: "3h 45m + 20m", dist: "18 NM", highlight: "Veados em Badija & noite de conforto na marina", wind: "ESE 7–10 kn de manhã (de través); NW refresca à noite (raj. 20–26)", details: "Travessia matinal com ESE de través — bom ângulo de vela até Korčula. Almoço com veados selvagens que vêm à mão em Badija. Visita à cidade medieval de Korčula; noite na ACI Marina Korčula — a única do roteiro — e a previsão confirma a escolha: o maestral NW refresca ao fim do dia (rajadas 20–26 kn), a melhor noite para estar amarrado em terra, com duche quente demorado e jantar na cidade murada mesmo à porta do barco.", sleep: "ACI Marina Korčula", img: "https://pplx-res.cloudinary.com/image/upload/v1770921179/pplx_search_images/08558b2377e0f2f0ac33c617655df5bb8860186e.jpg",
                 moorings: [
                     { name: "Badija, Korčula", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/carte?q=Badija%20Korčula", lat: 42.9542, lng: 17.1647 },
                     { name: "ACI Marina Korčula", type: "Marina", navilyUrl: "https://www.navily.com/port/aci-marina-korcula/1396", lat: 42.9583, lng: 17.1367 },
@@ -530,37 +549,40 @@
                     { name: "Uvala Kneža, Korčula", type: "Ancoradouro Livre (alternativa económica)", navilyUrl: "https://www.navily.com/carte?q=Uvala%20Kneža%20Korčula", lat: 42.9700, lng: 17.1400 }
                 ],
                 plan: [
-                    { time: "09:00", text: "Navegação (3h 45m) para a Ilha de Korčula." },
-                    { time: "12:45", text: "Chegada à Ilha de Badija." },
-                    { time: "13:00", text: "Almoço a Bordo ancorado ao largo de Badija (perto do mosteiro). Ir a terra ver os veados que vêm comer à mão." },
-                    { time: "15:30", text: "Navegação (20 min) até à <strong>ACI Marina Korčula</strong> (~120€+, mas a única noite de marina do roteiro): eletricidade em terra, água ilimitada, duche quente e possibilidade de lavar roupa. <strong>Alternativa económica:</strong> ancorar em Baía de Luka ou Uvala Kneža e ir de táxi-boat/dinghy até à cidade." },
+                    { time: "08:00", text: "Mergulho matinal nas águas turquesa de Mali Lago + pequeno-almoço." },
+                    { time: "09:30", text: "Navegação (3h 45m) para a Ilha de Korčula — ESE 7–10 kn de través, bom ângulo de vela." },
+                    { time: "13:15", text: "Chegada à Ilha de Badija." },
+                    { time: "13:30", text: "Almoço a Bordo ancorado ao largo de Badija (perto do mosteiro). Ir a terra ver os veados que vêm comer à mão." },
+                    { time: "15:45", text: "Navegação (20 min) até à <strong>ACI Marina Korčula</strong> (~120€+, mas a única noite de marina do roteiro): eletricidade em terra, água ilimitada, duche quente e possibilidade de lavar roupa. Chegar antes do NW refrescar ao fim da tarde. <strong>Alternativa económica:</strong> ancorar em Baía de Luka ou Uvala Kneža e ir de táxi-boat/dinghy até à cidade — mas nesta noite de NW fresco a marina vale o preço." },
                     { time: "17:00", text: "Visita à cidade medieval de Korčula, a poucos passos do pontão." },
-                    { time: "20:30", text: "Jantar num restaurante da cidade murada ou a bordo na marina — uma noite tranquila, amarrados em terra, para recuperar energias." }
+                    { time: "20:30", text: "Jantar num restaurante da cidade murada ou a bordo na marina — com o maestral a soprar lá fora (raj. ~25 kn), a noite amarrados em terra sabe ainda melhor." }
                 ] },
-            { day: 6, date: "Quinta, 23 Jul", title: "O Segredo de Pelješac", route: "Korčula → Žuljana → Marčuleti", time: "3h + 2h", dist: "24 NM", highlight: "Žuljana & baía selvagem", details: "Navegação pelo canal de Pelješac. Paragem em Žuljana; noite em Marčuleti (selvagem, grátis).", sleep: "Marčuleti (selvagem)", img: "https://pplx-res.cloudinary.com/image/upload/v1770921190/pplx_search_images/873f7f73e83d4fd466d6bdffc63d05a73f1f21a3.jpg",
+            { day: 6, date: "Quinta, 23 Jul", title: "O Segredo de Pelješac", route: "Korčula → Žuljana → Marčuleti", time: "3h + 2h", dist: "24 NM", highlight: "Žuljana & baía selvagem", wind: "Bora NNE de madrugada (raj. 25–30), alivia ao meio-dia; NW moderado à tarde", details: "O dia mais ventoso da semana: bora de NNE ao início da manhã, com rajadas de 25–30 kn a descer das encostas — por isso a manhã é passada na marina sem pressa e larga-se a meio da manhã, quando alivia. Paragem em Žuljana (com vento do quadrante norte a baía fica de água lisa); noite em Marčuleti (selvagem, grátis), na costa sul do Pelješac, abrigada do NW da tarde.", sleep: "Marčuleti (selvagem)", img: "https://pplx-res.cloudinary.com/image/upload/v1770921190/pplx_search_images/873f7f73e83d4fd466d6bdffc63d05a73f1f21a3.jpg",
                 moorings: [
                     { name: "Žuljana, Pelješac", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/mouillage/zuljana/29359", lat: 42.8899, lng: 17.4536 },
                     { name: "Marčuleti, Pelješac", type: "Ancoradouro Livre (Selvagem)", navilyUrl: "https://www.navily.com/carte?q=Marčuleti%20Pelješac", lat: 42.7753, lng: 17.7533 }
                 ],
                 plan: [
-                    { time: "09:30", text: "Navegação (3h 00m) pelo Canal de Pelješac rumo a Žuljana." },
-                    { time: "12:30", text: "Chegada a Žuljana. Baía lindíssima, virada a oeste." },
-                    { time: "13:00", text: "Almoço a Bordo." },
-                    { time: "15:00", text: "Navegação (2h 00m) até Marčuleti ou Kobaš. <strong>Dica:</strong> Kobaš tem cais de restaurantes. Para grátis e livre, ancore em Marčuleti (selvagem, sem casas) ou ao largo de Kobaš se a profundidade permitir (cai rápido para 20 m)." },
-                    { time: "20:00", text: "Jantar a Bordo." }
+                    { time: "08:30", text: "Manhã calma na marina: duche quente, pequeno-almoço na cidade — deixar a bora da madrugada perder força." },
+                    { time: "10:30", text: "Navegação (3h 00m) rumo a Žuljana. <strong>Atenção:</strong> bora residual com rajadas descendentes das encostas do Pelješac — velas com rizes ou motor até o vento estabilizar." },
+                    { time: "13:30", text: "Chegada a Žuljana. Baía lindíssima, virada a oeste — com o vento de N/NE a soprar de terra, fica de água lisa para banhos." },
+                    { time: "14:00", text: "Almoço a Bordo." },
+                    { time: "15:30", text: "Navegação (2h 00m) até Marčuleti ou Kobaš, com o NW da tarde pela popa. <strong>Dica:</strong> Kobaš tem cais de restaurantes. Para grátis e livre, ancore em Marčuleti (selvagem, sem casas) ou ao largo de Kobaš se a profundidade permitir (cai rápido para 20 m)." },
+                    { time: "20:00", text: "Jantar a Bordo, abrigados na costa sul do Pelješac." }
                 ] },
-            { day: 7, date: "Sexta, 24 Jul", title: "O Regresso Estratégico", route: "Pelješac → Jakljan → Dubrovnik", time: "1h + 2h 30m", dist: "20 NM", highlight: "Jakljan & abastecimento Gruž", details: "Paragem na baía de Jakljan para últimos mergulhos. Navegação final até Dubrovnik; abastecimento em Gruž antes de entrar na marina.", sleep: "ACI Marina Dubrovnik", img: "https://pplx-res.cloudinary.com/image/upload/v1770921190/pplx_search_images/407a08c6af74f11c55773f413ca552a23bda045c.jpg",
+            { day: 7, date: "Sexta, 24 Jul", title: "O Regresso Estratégico", route: "Pelješac → Jakljan → Dubrovnik", time: "1h + 2h 30m", dist: "20 NM", highlight: "Jakljan & abastecimento Gruž", wind: "Fraco: NE de manhã, brisa SW 5–9 kn à tarde, de través para Dubrovnik", details: "Vento fraco todo o dia — manhã de mergulho em Marčuleti sem pressa. Paragem na baía de Jakljan para últimos mergulhos; navegação final até Dubrovnik com a brisa térmica SW de través. Abastecimento em Gruž antes de entrar na marina.", sleep: "ACI Marina Dubrovnik", img: "https://pplx-res.cloudinary.com/image/upload/v1770921190/pplx_search_images/407a08c6af74f11c55773f413ca552a23bda045c.jpg",
                 moorings: [
                     { name: "Jakljan", type: "Ancoradouro Livre", navilyUrl: "https://www.navily.com/mouillage/otok-jakljan/42694", lat: 42.7000, lng: 18.0500 },
                     { name: "ACI Marina Dubrovnik", type: "Marina", navilyUrl: "https://www.navily.com/carte?q=ACI%20Marina%20Dubrovnik", lat: 42.6750, lng: 18.0780 }
                 ],
                 plan: [
-                    { time: "09:00", text: "Navegação (1h 00m) até à ilha de Jakljan." },
-                    { time: "10:00", text: "Paragem na baía desabitada de Jakljan (ou Olipa). Últimos mergulhos em \"piscina natural\"." },
-                    { time: "12:30", text: "Almoço a Bordo." },
-                    { time: "14:00", text: "Navegação final (2h 30m) para Dubrovnik." },
-                    { time: "16:30", text: "Abastecimento de combustível no porto de Gruž. (Obrigatório antes de devolver.)" },
-                    { time: "17:30", text: "Entrada na ACI Marina Dubrovnik." },
+                    { time: "08:30", text: "Pequeno-almoço e último mergulho matinal na água lisa de Marčuleti." },
+                    { time: "10:00", text: "Navegação (1h 00m) até à ilha de Jakljan." },
+                    { time: "11:00", text: "Paragem na baía desabitada de Jakljan (ou Olipa). Últimos mergulhos em \"piscina natural\"." },
+                    { time: "13:00", text: "Almoço a Bordo." },
+                    { time: "14:30", text: "Navegação final (2h 30m) para Dubrovnik — brisa SW de través a empurrar para casa." },
+                    { time: "17:00", text: "Abastecimento de combustível no porto de Gruž. (Obrigatório antes de devolver; posto aberto até tarde no verão, mas manter margem.)" },
+                    { time: "18:00", text: "Entrada na ACI Marina Dubrovnik." },
                     { time: "20:00", text: "Jantar a bordo na marina (limpar o frigorífico) ou ir à cidade." }
                 ] }
         ];
@@ -609,6 +631,10 @@
                                     <i data-lucide="utensils" class="w-4 h-4 text-orange-500 mt-1 flex-shrink-0"></i>
                                     <div class="min-w-0 flex-1"><span class="text-[10px] font-bold text-slate-400 uppercase block">Highlight</span><span class="text-sm font-semibold break-words hyphens-auto">${item.highlight}</span></div>
                                 </div>
+                                ${item.wind ? `<div class="flex items-start gap-2 min-w-0 sm:col-span-2">
+                                    <i data-lucide="wind" class="w-4 h-4 text-sky-500 mt-1 flex-shrink-0"></i>
+                                    <div class="min-w-0 flex-1"><span class="text-[10px] font-bold text-slate-400 uppercase block">Vento Previsto</span><span class="text-sm font-semibold break-words hyphens-auto">${item.wind}</span></div>
+                                </div>` : ''}
                             </div>
                             ${item.moorings && item.moorings.length > 0 ? `<div class="border-t border-slate-100 pt-6 mb-6">
                                 <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2"><i data-lucide="anchor" class="w-4 h-4 text-blue-500"></i> Pontos de Ancoragem</h4>
