@@ -326,6 +326,8 @@
                 <div class="mt-4 flex flex-wrap justify-center gap-4 text-xs font-semibold uppercase tracking-wider">
                     <span class="flex items-center gap-2 text-blue-600"><span class="w-3 h-3 rounded-full bg-blue-600 border border-white shadow-sm"></span> Pontos em Terra</span>
                     <span class="flex items-center gap-2 text-teal-600"><span class="w-3 h-3 rounded-full bg-teal-600 border border-white shadow-sm"></span> Pontos Sailing</span>
+                    <span class="flex items-center gap-2 text-teal-600"><span class="w-6 border-t-2 border-dashed border-teal-600"></span> Rota (clicar p/ detalhes)</span>
+                    <span class="flex items-center gap-2 text-slate-600"><svg width="14" height="14" viewBox="0 0 24 24" class="inline"><path d="M12 2 L18 12 L13.6 10.6 L13.6 22 L10.4 22 L10.4 10.6 L6 12 Z" fill="#0d9488"/></svg> Vento previsto (aponta para onde sopra)</span>
                 </div>
                 <div class="mt-6 text-center">
                     <a href="mapa-todos-os-planos.html" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-full shadow-lg transition">
@@ -828,6 +830,46 @@
                     });
                     const dayLabel = p.day === '—' ? 'Chegada' : 'Dia ' + p.day;
                     L.marker([p.lat, p.lng], { icon: icon }).addTo(map).bindPopup(`<b>${dayLabel}</b><br>${p.nome}`);
+                });
+
+                // Pernadas do plano de navegação (traçado esquemático)
+                const routeLegs = [
+                    { day: 1, name: "Dubrovnik → Koločep", wind: "SE 3–5 kn (a cair)", coords: [[42.6750,18.0780],[42.6780,18.0048]] },
+                    { day: 2, name: "Koločep → Lopud → Šipan", wind: "Manhã calma; W 5–7 kn à tarde", coords: [[42.6780,18.0048],[42.6900,17.9550],[42.7300,17.8700],[42.7424,17.7869]] },
+                    { day: 3, name: "Šipan → Polače (Mljet)", wind: "Calmaria 0–6 kn (motor)", coords: [[42.7424,17.7869],[42.7859,17.3785]] },
+                    { day: 4, name: "Polače → Lastovnjaci → Mali Lago", wind: "ESE 8–10 kn de popa (velas!)", coords: [[42.7859,17.3785],[42.8000,17.3000],[42.7167,16.9500],[42.7680,16.8254]] },
+                    { day: 5, name: "Mali Lago → Badija → Korčula", wind: "ESE 7–10 kn de través; NW à noite", coords: [[42.7680,16.8254],[42.8000,16.9000],[42.8850,17.1950],[42.9542,17.1647],[42.9583,17.1367]] },
+                    { day: 6, name: "Korčula → Žuljana → Marčuleti", wind: "Bora NNE de manhã (raj. 25–30); NW à tarde", coords: [[42.9583,17.1367],[42.9400,17.2500],[42.8899,17.4536],[42.7753,17.7533]] },
+                    { day: 7, name: "Marčuleti → Jakljan → Dubrovnik", wind: "NE fraco de manhã; SW 5–9 kn à tarde", coords: [[42.7753,17.7533],[42.7000,18.0500],[42.6750,18.0780]] }
+                ];
+                routeLegs.forEach(leg => {
+                    L.polyline(leg.coords, { color: '#0d9488', weight: 3, opacity: 0.7, dashArray: '6 8' })
+                        .addTo(map)
+                        .bindPopup(`<b>Dia ${leg.day}</b><br>${leg.name}<br><span style="color:#0369a1">Vento: ${leg.wind}</span>`);
+                });
+
+                // Setas de vento previsto por pernada (a seta aponta para onde o vento sopra)
+                const windArrows = [
+                    { lat: 42.664, lng: 18.048, from: 135, label: "SE 3–5 kn", tone: "light", day: 1 },
+                    { lat: 42.712, lng: 17.910, from: 270, label: "W 5–7 kn", tone: "light", day: 2 },
+                    { lat: 42.772, lng: 17.583, from: 225, label: "0–6 kn", tone: "calm", day: 3 },
+                    { lat: 42.746, lng: 17.130, from: 112, label: "ESE 8–10 kn", tone: "mod", day: 4 },
+                    { lat: 42.852, lng: 17.045, from: 112, label: "ESE 7–10 kn", tone: "mod", day: 5 },
+                    { lat: 42.930, lng: 17.320, from: 22, label: "Bora NNE raj. 25–30", tone: "strong", day: 6 },
+                    { lat: 42.826, lng: 17.615, from: 315, label: "NW 6–10 kn", tone: "mod", day: 6 },
+                    { lat: 42.748, lng: 17.925, from: 45, label: "NE 2–5 kn", tone: "calm", day: 7 },
+                    { lat: 42.660, lng: 17.995, from: 225, label: "SW 5–9 kn", tone: "light", day: 7 }
+                ];
+                const windColors = { calm: '#94a3b8', light: '#0ea5e9', mod: '#0d9488', strong: '#d97706' };
+                windArrows.forEach(w => {
+                    const rot = (w.from + 180) % 360;
+                    const color = windColors[w.tone];
+                    const html = `<div style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" style="transform:rotate(${rot}deg);filter:drop-shadow(0 1px 1px rgba(0,0,0,.35));"><path d="M12 2 L18 12 L13.6 10.6 L13.6 22 L10.4 22 L10.4 10.6 L6 12 Z" fill="${color}"/></svg>
+                        <span style="font-size:10px;font-weight:700;background:rgba(255,255,255,.92);padding:1px 6px;border-radius:9999px;color:#334155;box-shadow:0 1px 2px rgba(0,0,0,.25);white-space:nowrap;">D${w.day} · ${w.label}</span>
+                    </div>`;
+                    const icon = L.divIcon({ className: 'wind-arrow-icon', html: html, iconSize: [140, 44], iconAnchor: [70, 22] });
+                    L.marker([w.lat, w.lng], { icon: icon, interactive: false, keyboard: false }).addTo(map);
                 });
             }
         } catch (e) { console.warn('Mapa não carregou:', e); }
